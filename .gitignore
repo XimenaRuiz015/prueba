@@ -1,0 +1,52 @@
+# Entornos virtuales de Python
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Archivos de configuración con contraseñas y llaves privadas
+.env
+.env.local
+.env.*.local
+*.env
+
+# Cache de Python y bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+
+# Archivos y bases de datos obsoletas o temporales
+data/chroma/
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+*.db-journal
+*.db-wal
+
+# Archivos de subida de pruebas (conservando carpeta)
+data/uploads/*
+!data/uploads/.gitkeep
+
+# Cache de tests y herramientas
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Archivos temporales de Office y del sistema
+~$*
+*.tmp
+*.temp
+
+# IDEs y sistemas operativos
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

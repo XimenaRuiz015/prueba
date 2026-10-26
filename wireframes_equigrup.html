@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equigrup S.A.S. — Entregable 4: Wireframes Estructurales (Baja/Media Fidelidad)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wf-bg: #f4f4f5;
+            --wf-surface: #ffffff;
+            --wf-muted: #e4e4e7;
+            --wf-border: #71717a;
+            --wf-border-strong: #27272a;
+            --wf-text: #18181b;
+            --wf-subtext: #52525b;
+            --wf-hatch: repeating-linear-gradient(45deg, #e4e4e7, #e4e4e7 8px, #f4f4f5 8px, #f4f4f5 16px);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--wf-bg);
+            background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
+            background-size: 16px 16px;
+            color: var(--wf-text);
+        }
+        code, .mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+        /* BARRA SUPERIOR DE CONTROL DE WIREFRAMES */
+        .wf-switcher-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #18181b;
+            color: #fafafa;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #000;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .wf-brand-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .wf-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .wf-tab-btn {
+            background: #27272a;
+            color: #d4d4d8;
+            border: 1px dashed #71717a;
+            padding: 8px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .wf-tab-btn.active, .wf-tab-btn:hover {
+            background: #fafafa;
+            color: #18181b;
+            border: 1px solid #fafafa;
+            font-weight: 700;
+        }
+
+        /* CONTENEDOR DE LIENZO */
+        .wf-canvas {
+            max-width: 1340px;
+            margin: 24px auto;
+            padding: 0 20px 48px 20px;
+        }
+        .wf-screen { display: none; }
+        .wf-screen.active { display: block; }
+
+        .wf-frame {
+            background: var(--wf-surface);
+            border: 2px solid var(--wf-border-strong);
+            box-shadow: 6px 6px 0px #a1a1aa;
+            overflow: hidden;
+        }
+        .wf-browser-chrome {
+            background: var(--wf-muted);
+            border-bottom: 2px solid var(--wf-border-strong);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+        .wf-dots { display: flex; gap: 6px; }
+        .wf-dot { width: 11px; height: 11px; border: 1.5px solid var(--wf-border-strong); border-radius: 50%; background: #fff; }
+        .wf-address-bar {
+            background: #fff;
+            border: 1.5px solid var(--wf-border-strong);
+            padding: 4px 16px;
+            width: 55%;
+            text-align: left;
+        }
+
+        /* UTILIDADES DE BLOQUES WIREFRAME */
+        .wf-box {
+            border: 1.5px solid var(--wf-border-strong);
+            background: #fff;
+            padding: 16px;
+            position: relative;
+        }
+        .wf-box-dashed {
+            border: 1.5px dashed var(--wf-border);
+            background: #fafafa;
+            padding: 14px;
+        }
+        .wf-placeholder-img {
+            background: var(--wf-hatch);
+            border: 1.5px solid var(--wf-border-strong);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--wf-border-strong);
+            font-weight: 600;
+            text-align: center;
+            padding: 12px;
+        }
+        .wf-tag {
+            display: inline-block;
+            border: 1px solid var(--wf-border-strong);
+            background: var(--wf-muted);
+            padding: 2px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .wf-btn {
+            display: inline-block;
+            border: 2px solid var(--wf-border-strong);
+            background: #e4e4e7;
+            color: #18181b;
+            padding: 8px 16px;
+            font-weight: 700;
+            font-size: 12.5px;
+            box-shadow: 2px 2px 0px #18181b;
+            cursor: default;
+        }
+        .wf-btn-primary {
+            background: #27272a;
+            color: #ffffff;
+        }
+        .wf-input {
+            width: 100%;
+            border: 1.5px solid var(--wf-border-strong);
+            padding: 8px 10px;
+            background: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--wf-text);
+        }
+        .wf-grid-12 {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+        .wf-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .wf-table th, .wf-table td {
+            border: 1.5px solid var(--wf-border-strong);
+            padding: 9px 10px;
+            text-align: left;
+        }
+        .wf-table th {
+            background: var(--wf-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+        .wf-annotation {
+            background: #f4f4f5;
+            border-left: 4px solid #18181b;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: var(--wf-subtext);
+            margin-bottom: 14px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .wf-fab {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            border: 2px solid #18181b;
+            background: #27272a;
+            color: #fff;
+            padding: 12px 18px;
+            font-weight: 700;
+            box-shadow: 4px 4px 0 #71717a;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SELECTOR INTERACTIVO DE PANTALLAS WIREFRAME -->
+    <div class="wf-switcher-bar">
+        <div class="wf-brand-title">[BLUEPRINT WIREFRAMES v2.0] EQUIGRUP S.A.S. — ESCALA DE GRISES ESTRUCTURAL (12 COLUMNAS)</div>
+        <div class="wf-tabs">
+            <button class="wf-tab-btn active" onclick="showWf('wf1', this)">[WF-01] Landing Autogestionable</button>
+            <button class="wf-tab-btn" onclick="showWf('wf2', this)">[WF-02] Explorador Documental & Proyectos</button>
+            <button class="wf-tab-btn" onclick="showWf('wf3', this)">[WF-03] Consola Chatbot IA (RAG)</button>
+            <button class="wf-tab-btn" onclick="showWf('wf4', this)">[WF-04] Admin CMS & Auditoría RAG</button>
+        </div>
+    </div>
+
+    <div class="wf-canvas">
+
+        <!-- ===================================================================
+             WIREFRAME 1: LANDING PAGE CORPORATIVA AUTOGESTIONABLE
+             =================================================================== -->
+        <section id="wf1" class="wf-screen active">
+            <div class="wf-annotation">
+                [ESPECIFICACIÓN WF-01] Vista: Landing Page Corporativa Autogestionable | Ruta: GET / | Grilla: 12 Columnas | Objetivo: Captación B2B Industrial (Ecopetrol, Cenit, Reficar) y Acceso Rápido al Asistente IA RAG.
+            </div>
+            <div class="wf-frame" style="position: relative; padding-bottom: 70px;">
+                <div class="wf-browser-chrome">
+                    <div class="wf-dots"><span class="wf-dot"></span><span class="wf-dot"></span><span class="wf-dot"></span></div>
+                    <div class="wf-address-bar">https://agente-equigrup.onrender.com/ (Portal Público Autogestionable)</div>
+                    <div>[VIEWPORT: 1440x900 Desktop]</div>
+                </div>
+
+                <!-- HEADER / NAVBAR -->
+                <div style="border-bottom: 2px solid #27272a; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="wf-placeholder-img" style="width: 44px; height: 44px;">[LOGO]</div>
+                        <div>
+                            <strong style="font-size: 16px;">EQUIGRUP S.A.S.</strong>
+                            <div class="mono" style="color: #52525b;">Ingeniería Mecánica & Confiabilidad</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 18px; align-items: center;" class="mono">
+                        <span>[Inicio]</span>
+                        <span>[Servicios API 686]</span>
+                        <span>[Obras & Proyectos (52)]</span>
+                        <span>[Normativa & Procedimientos]</span>
+                        <span class="wf-btn">[🔒 Acceso Intranet / Admin]</span>
+                    </div>
+                </div>
+
+                <div style="padding: 24px;">
+                    <!-- HERO SECTION (CMS DINÁMICO) -->
+                    <div class="wf-grid-12" style="margin-bottom: 24px;">
+                        <div class="wf-box" style="grid-column: span 7; display: flex; flex-direction: column; justify-content: center;">
+                            <div style="margin-bottom: 8px;"><span class="wf-tag">[BANNER DINÁMICO CMS - TABLA: publicaciones_blog (es_banner=True)]</span></div>
+                            <h1 style="margin: 6px 0 12px 0; font-size: 24px; text-transform: uppercase;">Especialistas en Grouting Epóxico Chockfast Red, Alineación Láser API 686 y Montaje Rotativo</h1>
+                            <p style="font-size: 13.5px; color: #52525b; line-height: 1.5; margin: 0 0 18px 0;">
+                                Ejecución certificada de cimentación monolítica, perforación y torqueo de pernos de anclaje (Anchor Bolts) y nivelación de precisión para Ecopetrol, Cenit, ArcelorMittal y Reficar.
+                            </p>
+                            <div style="display: flex; gap: 12px;">
+                                <span class="wf-btn wf-btn-primary">[CTA 1: Consultar Asistente Técnico IA (Equi)]</span>
+                                <span class="wf-btn">[CTA 2: Explorar 52 Proyectos Ejecutados]</span>
+                            </div>
+                        </div>
+                        <div class="wf-placeholder-img" style="grid-column: span 5; min-height: 240px;">
+                            [MEDIA PLACEHOLDER: Fotografía / Video Obra Destacada]<br>
+                            Ej: Montaje Compresor Atlas Copco / Vaciado Chockfast Red Planta Galán
+                        </div>
+                    </div>
+
+                    <!-- CATÁLOGO DE 4 SERVICIOS INDUSTRIALES -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong class="mono">[SECCIÓN: LÍNEAS DE ESPECIALIDAD TÉCNICA EQUIGRUP — 4 COLUMNAS]</strong>
+                            <span class="wf-tag">Estándares: API RP 686 / ISO 10816 / PAC-EG</span>
+                        </div>
+                        <div class="wf-grid-12">
+                            <div class="wf-box" style="grid-column: span 3;">
+                                <div class="wf-placeholder-img" style="height: 70px; margin-bottom: 10px;">[ICONO: GROUTING]</div>
+                                <strong style="font-size: 14px;">1. Inyección y Curado Grout Epóxico</strong>
+                                <p style="font-size: 12px; color: #52525b;">Vaciado monolítico con Chockfast Red (ITW), control exotérmico y curva térmica API 686 Cap. 5.</p>
+                            </div>
+                            <div class="wf-box" style="grid-column: span 3;">
+                                <div class="wf-placeholder-img" style="height: 70px; margin-bottom: 10px;">[ICONO: LÁSER API 686]</div>
+                                <strong style="font-size: 14px;">2. Alineación Láser & Coplanaridad</strong>
+                                <p style="font-size: 12px; color: #52525b;">Nivelación geométrica de skids, corrección de pata coja (&lt; 2.0 mils) y alineación de ejes.</p>
+                            </div>
+                            <div class="wf-box" style="grid-column: span 3;">
+                                <div class="wf-placeholder-img" style="height: 70px; margin-bottom: 10px;">[ICONO: ANCHOR BOLTS]</div>
+                                <strong style="font-size: 14px;">3. Pernos de Anclaje (Anchor Bolts)</strong>
+                                <p style="font-size: 12px; color: #52525b;">Perforación diamantada, fijación epóxica y tensión/torqueo controlado (Procedimiento PAC-EG-073).</p>
+                            </div>
+                            <div class="wf-box" style="grid-column: span 3;">
+                                <div class="wf-placeholder-img" style="height: 70px; margin-bottom: 10px;">[ICONO: ROTATIVOS]</div>
+                                <strong style="font-size: 14px;">4. Montaje Equipos Rotativos</strong>
+                                <p style="font-size: 12px; color: #52525b;">Bombas Booster, Compresores Atlas Copco, Motores Waukesha 5351/5352 y Turbinas Solar.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARRUSEL DE CLIENTES DEL DATASET -->
+                    <div class="wf-box-dashed" style="margin-bottom: 24px; text-align: center;">
+                        <div class="mono" style="margin-bottom: 10px; font-weight: 700;">[CARRUSEL HORIZONTAL DE ALIADOS Y CLIENTES AUDITADOS EN DATASET]</div>
+                        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
+                            <span class="wf-tag">[LOGO: ECOPETROL S.A.]</span>
+                            <span class="wf-tag">[LOGO: CENIT TRANSPORTE]</span>
+                            <span class="wf-tag">[LOGO: ARCELORMITTAL (PUERTO ANTQ)]</span>
+                            <span class="wf-tag">[LOGO: SIERRACOL ENERGY]</span>
+                            <span class="wf-tag">[LOGO: REFICAR]</span>
+                            <span class="wf-tag">[LOGO: VEOLIA / FEMSA]</span>
+                            <span class="wf-tag">[LOGO: TGI]</span>
+                            <span class="wf-tag">[LOGO: SIEMENS ENERGY]</span>
+                            <span class="wf-tag">[LOGO: FLOWSERVE]</span>
+                        </div>
+                    </div>
+
+                    <!-- PROYECTOS DESTACADOS (SINCRONIZADOS CON SQLITE) -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong class="mono">[GRID DE OBRAS RECIENTES — ORIGEN: TABLA_PROYECTOS_SQL (equigrup_proyectos.db)]</strong>
+                            <span class="mono">[Ver catálogo completo de 52 obras →]</span>
+                        </div>
+                        <div class="wf-grid-12">
+                            <div class="wf-box" style="grid-column: span 4;">
+                                <span class="wf-tag">COD: EG24-184S | Completado</span>
+                                <h4 style="margin: 8px 0 4px 0;">Alineación Sistemas BBC-2420 Planta Galán</h4>
+                                <div class="mono" style="color: #52525b;">Cliente: Cenit | Ubicación: Barrancabermeja</div>
+                            </div>
+                            <div class="wf-box" style="grid-column: span 4;">
+                                <span class="wf-tag">COD: EG23-133S | Completado</span>
+                                <h4 style="margin: 8px 0 4px 0;">Visita Técnica Sistema de Bombeo Planta FEMSA</h4>
+                                <div class="mono" style="color: #52525b;">Cliente: Veolia / FEMSA | Ubicación: Barranquilla</div>
+                            </div>
+                            <div class="wf-box" style="grid-column: span 4;">
+                                <span class="wf-tag">COD: EG24-189C | En Ejecución</span>
+                                <h4 style="margin: 8px 0 4px 0;">Inyección Grout Chockfast Red Motor Waukesha</h4>
+                                <div class="mono" style="color: #52525b;">Cliente: Ecopetrol / Cenit | Ubicación: Estación Sebastopol</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTÓN FLOTANTE CHATBOT RAG -->
+                <div class="wf-fab">
+                    [🤖 FAB WIDGET: Consultar a Equi IA (RAG Activo)]
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             WIREFRAME 2: DASHBOARD / EXPLORADOR DOCUMENTAL Y PROYECTOS
+             =================================================================== -->
+        <section id="wf2" class="wf-screen">
+            <div class="wf-annotation">
+                [ESPECIFICACIÓN WF-02] Vista: Explorador Maestro del Dataset Consolidado (248 Registros: 196 Archivos + 52 Proyectos SQL) | Ruta: /repositorio-documental | Layout: Sidebar Filtros (3 cols) + Contenido Principal (9 cols).
+            </div>
+            <div class="wf-frame">
+                <div class="wf-browser-chrome">
+                    <div class="wf-dots"><span class="wf-dot"></span><span class="wf-dot"></span><span class="wf-dot"></span></div>
+                    <div class="wf-address-bar">https://agente-equigrup.onrender.com/#proyectos-y-documentos</div>
+                    <div>[ROL: Ingeniero de Operaciones / Consultor]</div>
+                </div>
+
+                <div class="wf-grid-12" style="padding: 20px;">
+                    <!-- SIDEBAR DE FILTROS FACETADOS (3 COLUMNAS) -->
+                    <aside class="wf-box" style="grid-column: span 3;">
+                        <div class="mono" style="font-weight: 700; border-bottom: 1.5px solid #27272a; padding-bottom: 8px; margin-bottom: 12px;">
+                            [PANEL DE FILTROS DINÁMICOS]
+                        </div>
+                        <div style="margin-bottom: 12px;">
+                            <label class="mono">1. carpeta_modulo:</label>
+                            <div class="wf-input" style="margin-top: 4px;">[▼ Todos los Módulos (5)]</div>
+                            <div class="mono" style="font-size: 11px; color: #52525b; margin-top: 4px;">
+                                • 0.0. NORMATIVA Y GESTION<br>
+                                • 0.1. INFORMES TECNICOS<br>
+                                • 0.2. COTIZACIONES<br>
+                                • 0.3. PROCEDIMIENTOS<br>
+                                • TABLA_PROYECTOS_SQL
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 12px;">
+                            <label class="mono">2. cliente_entidad:</label>
+                            <div class="wf-input" style="margin-top: 4px;">[▼ Ecopetrol / Cenit / Arcelor...]</div>
+                        </div>
+                        <div style="margin-bottom: 12px;">
+                            <label class="mono">3. anio:</label>
+                            <div class="wf-input" style="margin-top: 4px;">[▼ Todos (2018 - 2026)]</div>
+                        </div>
+                        <div style="margin-bottom: 12px;">
+                            <label class="mono">4. estado_operativo:</label>
+                            <div class="wf-input" style="margin-top: 4px;">[▼ Completado / En ejecución / Cotizado]</div>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <label class="mono">5. indexado_rag:</label>
+                            <div class="wf-input" style="margin-top: 4px;">[☑ Sí | ☑ Sí (Vía SQL Tool) | ☐ No]</div>
+                        </div>
+                        <div class="wf-btn" style="width: 100%; text-align: center;">[Limpiar Filtros]</div>
+                    </aside>
+
+                    <!-- ÁREA PRINCIPAL (9 COLUMNAS) -->
+                    <div style="grid-column: span 9;">
+                        <!-- KPIs SUPERIORES -->
+                        <div class="wf-grid-12" style="margin-bottom: 16px;">
+                            <div class="wf-box" style="grid-column: span 3;">
+                                <div class="mono" style="color: #52525b;">TOTAL REGISTROS AUDITADOS</div>
+                                <div style="font-size: 24px; font-weight: 800; margin-top: 4px;">248</div>
+                                <div class="mono">196 Docs + 52 SQL</div>
+                            </div>
+                            <div class="wf-box" style="grid-column: span 3;">
+                                <div class="mono" style="color: #52525b;">COBERTURA MOTOR RAG</div>
+                                <div style="font-size: 24px; font-weight: 800; margin-top: 4px;">109 Chunks</div>
+                                <div class="mono">SQLite FTS + SQL Tool</div>
+                            </div>
+                            <div class="wf-box" style="grid-column: span 3;">
+                                <div class="mono" style="color: #52525b;">PROYECTOS ACTIVOS / OBRA</div>
+                                <div style="font-size: 24px; font-weight: 800; margin-top: 4px;">52 Obras</div>
+                                <div class="mono">12 Clientes Industriales</div>
+                            </div>
+                            <div class="wf-box" style="grid-column: span 3;">
+                                <div class="mono" style="color: #52525b;">PROCEDIMIENTOS PAC/PAG</div>
+                                <div style="font-size: 24px; font-weight: 800; margin-top: 4px;">100% Vigentes</div>
+                                <div class="mono">Norma API RP 686</div>
+                            </div>
+                        </div>
+
+                        <!-- BARRA DE BÚSQUEDA SEMÁNTICA / EXACTA -->
+                        <div class="wf-box" style="margin-bottom: 16px; display: flex; gap: 10px; align-items: center;">
+                            <input class="wf-input" value="🔍 Buscar por código (ej. EG24-184S, PAC-EG-073), cliente (Cenit, Ecopetrol) o maquinaria (Waukesha, Booster)..." readonly>
+                            <span class="wf-btn wf-btn-primary" style="white-space: nowrap;">[Filtrar Tabla]</span>
+                            <span class="wf-btn" style="white-space: nowrap;">[📥 Exportar CSV]</span>
+                        </div>
+
+                        <!-- TABLA DE DATOS PAGINADA -->
+                        <div class="wf-box" style="padding: 0;">
+                            <table class="wf-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Código Ref</th>
+                                        <th>Módulo / Carpeta</th>
+                                        <th>Archivo / Proyecto</th>
+                                        <th>Cliente / Planta</th>
+                                        <th>Maquinaria / Especialidad</th>
+                                        <th>Estado Operativo</th>
+                                        <th>Indexado RAG</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="mono">#002</td>
+                                        <td class="mono"><strong>EG23-133S</strong></td>
+                                        <td class="mono">0.1. INFORMES TECNICOS</td>
+                                        <td>EG23-133S INFORME VISTA TECNICA SIST BOMBEO, VEOLIA FEMSA BQUILLA.pdf</td>
+                                        <td>Veolia / FEMSA (Barranquilla)</td>
+                                        <td>Equipos Rotativos / Bombeo</td>
+                                        <td><span class="wf-tag">Completado</span></td>
+                                        <td><span class="wf-tag">[Sí]</span></td>
+                                        <td class="mono">[📄 PDF] [💬 IA]</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mono">#018</td>
+                                        <td class="mono"><strong>EG24-184S</strong></td>
+                                        <td class="mono">0.1. INFORMES TECNICOS</td>
+                                        <td>EG24-184S INFORME ALINEACION SISTEMAS BBC-2420 PLANTA GALAN CENIT.pdf</td>
+                                        <td>Cenit Transporte (Planta Galán)</td>
+                                        <td>Skid Bombeo / Alineación Láser</td>
+                                        <td><span class="wf-tag">Completado</span></td>
+                                        <td><span class="wf-tag">[Sí]</span></td>
+                                        <td class="mono">[📄 PDF] [💬 IA]</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mono">#094</td>
+                                        <td class="mono"><strong>EG24-189C</strong></td>
+                                        <td class="mono">0.2. COTIZACIONES</td>
+                                        <td>EG24-189C PROPUESTA TECNICA ECONOMICA GROUTING CHOCKFAST RED.xlsx</td>
+                                        <td>Ecopetrol S.A. (Barrancabermeja)</td>
+                                        <td>Motor Waukesha / Grout Epóxico</td>
+                                        <td><span class="wf-tag">Cotizado</span></td>
+                                        <td><span class="wf-tag">[No]</span></td>
+                                        <td class="mono">[📊 XLSX] [💬 IA]</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mono">#142</td>
+                                        <td class="mono"><strong>PAC-EG-073</strong></td>
+                                        <td class="mono">0.3. PROCEDIMIENTOS</td>
+                                        <td>PAC-EG-073 PROCEDIMIENTO TORQUEO Y FIJACION PERNOS ANCLAJE.pdf</td>
+                                        <td>Equigrup Estándar Calidad</td>
+                                        <td>Pernos de Anclaje (Anchor Bolts)</td>
+                                        <td><span class="wf-tag">Vigente</span></td>
+                                        <td><span class="wf-tag">[Sí]</span></td>
+                                        <td class="mono">[📄 PDF] [💬 IA]</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mono">#205</td>
+                                        <td class="mono"><strong>SQL-PRJ-04</strong></td>
+                                        <td class="mono">TABLA_PROYECTOS_SQL</td>
+                                        <td>Instalación de Pernos de Anclaje - Proyecto Puerto Antioquia</td>
+                                        <td>ArcelorMittal (Turbo, Antq)</td>
+                                        <td>Pernos de Anclaje / Cimentación</td>
+                                        <td><span class="wf-tag">En ejecución</span></td>
+                                        <td><span class="wf-tag">[Sí (SQL Tool)]</span></td>
+                                        <td class="mono">[✏️ Edit] [💬 IA]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="padding: 10px 14px; background: #e4e4e7; display: flex; justify-content: space-between; align-items: center;" class="mono">
+                                <span>Mostrando registros 1 - 5 de 248 totales</span>
+                                <span>[« Anterior] [Página 1 de 50] [Siguiente »]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             WIREFRAME 3: CONSOLA DEL CHATBOT IA (VISTA COMPLETA RAG + SQL TOOL)
+             =================================================================== -->
+        <section id="wf3" class="wf-screen">
+            <div class="wf-annotation">
+                [ESPECIFICACIÓN WF-03] Vista: Consola del Asistente Inteligente "Equi" (Arquitectura Híbrida RAG + SQL Tool) | Ruta: /#chat | Componentes: Historial de Sesiones + Área de Mensajes con Citación Documental + Chips de Sugerencias API 686.
+            </div>
+            <div class="wf-frame">
+                <div class="wf-browser-chrome">
+                    <div class="wf-dots"><span class="wf-dot"></span><span class="wf-dot"></span><span class="wf-dot"></span></div>
+                    <div class="wf-address-bar">https://agente-equigrup.onrender.com/#chat (Consola Chatbot IA Equi - Motor RAG)</div>
+                    <div>[ENDPOINT: POST /chat]</div>
+                </div>
+
+                <div class="wf-grid-12" style="padding: 20px;">
+                    <!-- PANEL LATERAL DE SESIONES Y ESTADO RAG (3 COLS) -->
+                    <aside class="wf-box" style="grid-column: span 3;">
+                        <div class="wf-btn wf-btn-primary" style="width: 100%; text-align: center; margin-bottom: 14px;">[+ Nueva Consulta Técnica]</div>
+                        <div class="mono" style="font-weight: 700; margin-bottom: 8px;">[HISTORIAL DE SESIONES]</div>
+                        <div class="wf-box-dashed" style="margin-bottom: 8px; font-size: 12px;">
+                            <strong>● Curado Grout Chockfast Red</strong>
+                            <div class="mono" style="color: #52525b;">Hace 2 min • Ref: API 686</div>
+                        </div>
+                        <div class="wf-box-dashed" style="margin-bottom: 8px; font-size: 12px;">
+                            <strong>○ Alineación BBC-2420 Galán</strong>
+                            <div class="mono" style="color: #52525b;">Ayer • Ref: EG24-184S</div>
+                        </div>
+                        <div class="wf-box-dashed" style="margin-bottom: 16px; font-size: 12px;">
+                            <strong>○ Pernos Puerto Antioquia</strong>
+                            <div class="mono" style="color: #52525b;">14 Oct • Ref: ArcelorMittal</div>
+                        </div>
+
+                        <div class="mono" style="font-weight: 700; margin-bottom: 8px;">[TELEMETRÍA MOTOR RAG]</div>
+                        <div class="wf-box" style="font-size: 11.5px;" class="mono">
+                            • Motor LLM: Groq / Gemini Failover<br>
+                            • Corpus SQLite RAG: 109 Chunks<br>
+                            • Catálogo SQLite: 52 Proyectos<br>
+                            • Microservicio MS-1: Conectado
+                        </div>
+                    </aside>
+
+                    <!-- VENTANA CENTRAL DE CONVERSACIÓN (9 COLS) -->
+                    <div class="wf-box" style="grid-column: span 9; display: flex; flex-direction: column; justify-content: space-between; min-height: 540px;">
+                        <div>
+                            <!-- CABECERA DEL CHAT -->
+                            <div style="border-bottom: 1.5px solid #27272a; padding-bottom: 10px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong>[AVATAR 🤖] Asistente Inteligente Equi — Consultor RAG de Ingeniería Mecánica</strong>
+                                    <div class="mono" style="color: #52525b;">Respuestas fundamentadas estrictamente en manuales API 686, procedimientos PAC-EG y base de datos SQLite</div>
+                                </div>
+                                <span class="wf-tag">ESTADO: ONLINE</span>
+                            </div>
+
+                            <!-- BURBUJA USUARIO -->
+                            <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                                <div class="wf-box" style="max-width: 72%; background: #e4e4e7;">
+                                    <div class="mono" style="color: #52525b; margin-bottom: 4px;">[ACTOR: Ingeniero de Operaciones]</div>
+                                    ¿Cuál es el procedimiento de preparación y tiempo de curado del grout epóxico Chockfast Red según la norma API 686 y en qué proyectos de Cenit o Ecopetrol lo hemos aplicado?
+                                </div>
+                            </div>
+
+                            <!-- BURBUJA ASISTENTE IA CON CITACIÓN DE FUENTES -->
+                            <div style="display: flex; justify-content: flex-start; margin-bottom: 16px;">
+                                <div class="wf-box" style="max-width: 88%;">
+                                    <div class="mono" style="color: #52525b; margin-bottom: 6px;">[ACTOR: Motor IA / Servicio RAG (Equi)]</div>
+                                    <p style="margin: 0 0 8px 0; font-size: 13px; line-height: 1.5;">
+                                        <strong>1. Protocolo Técnico Chockfast Red (Norma API RP 686 Cap. 5):</strong><br>
+                                        • <strong>Preparación de Superficie:</strong> El concreto debe tener curado mínimo de 28 días, escarificado con perfil rugoso (CSP 5-7), libre de grasa/humedad, y el acero de la base limpiado con chorro abrasivo a metal blanco <code>SSPC-SP5</code>.<br>
+                                        • <strong>Mezcla y Temperatura:</strong> Acondicionar resina, endurecedor y agregado entre <strong>21°C y 28°C</strong>. Mezclar resina + endurecedor a bajas RPM antes de incorporar gradualmente los sacos de agregado para evitar atrapamiento de aire.<br>
+                                        • <strong>Tiempo de Curado:</strong> <strong>24 horas a 25°C</strong> (o hasta 48 horas a 15°C) antes de aplicar torque final a los pernos de anclaje.
+                                    </p>
+                                    <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.5;">
+                                        <strong>2. Proyectos Relacionados en Base de Datos (`equigrup_proyectos.db`):</strong><br>
+                                        • <strong>Proyecto #14 (Cenit - Planta Galán):</strong> Nivelación, alineación láser y aplicación de grout epóxico en sistemas de bombeo BBC-2420.<br>
+                                        • <strong>Proyecto #21 (Ecopetrol - Barrancabermeja):</strong> Cimentación epóxica Chockfast Red en unidad compresora y motores Waukesha.
+                                    </p>
+
+                                    <!-- TARJETA DE CITACIÓN DE FUENTES DOCUMENTALES -->
+                                    <div class="wf-box-dashed">
+                                        <div class="mono" style="font-weight: 700; margin-bottom: 6px;">📚 [FUENTES VERIFICADAS EXTRAÍDAS POR EL MOTOR RAG (fuentes_consultadas)]:</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #a1a1aa; padding: 4px 0;" class="mono">
+                                            <span>📄 [COD: API-686] Documento: API 686.pdf (Carpeta: 0.0. NORMATIVA Y GESTION)</span>
+                                            <span class="wf-tag">[Abrir PDF Original ↗]</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #a1a1aa; padding: 4px 0;" class="mono">
+                                            <span>📄 [COD: ITW-CF-RED] Documento: Procedimiento Grout Chockfast Red.pdf (0.3. PROCEDIMIENTOS)</span>
+                                            <span class="wf-tag">[Abrir PDF Original ↗]</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0;" class="mono">
+                                            <span>🗄️ [COD: EG24-184S] Base de Datos: Proyecto #14 - Alineación Sistemas BBC-2420 Planta Galán Cenit</span>
+                                            <span class="wf-tag">[Ver en Catálogo ↗]</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ZONA INFERIOR: CHIPS DE SUGERENCIAS + INPUT -->
+                        <div>
+                            <div style="margin-bottom: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="wf-tag">[Chip 1: ¿Tolerancia alineación láser API 686?]</span>
+                                <span class="wf-tag">[Chip 2: Proyectos ejecutados para Cenit en Planta Galán]</span>
+                                <span class="wf-tag">[Chip 3: Torque de pernos de anclaje PAC-EG-073]</span>
+                                <span class="wf-tag">[Chip 4: Informes de Reficar y SierraCol Energy]</span>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <input class="wf-input" value="Escribe tu consulta sobre manuales técnicos, normas API 686 o proyectos de Equigrup..." readonly>
+                                <span class="wf-btn wf-btn-primary">[Enviar Consulta ➤]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             WIREFRAME 4: PANEL DE ADMINISTRACIÓN (AUTOGESTIÓN CMS & AUDITORÍA RAG)
+             =================================================================== -->
+        <section id="wf4" class="wf-screen">
+            <div class="wf-annotation">
+                [ESPECIFICACIÓN WF-04] Vista: Panel de Administración (Autogestión Web CMS + Gestor de Indexación y Auditoría RAG) | Ruta: /#admin-cms | Rol exclusivo: Administrador del Sistema (Freddy).
+            </div>
+            <div class="wf-frame">
+                <div class="wf-browser-chrome">
+                    <div class="wf-dots"><span class="wf-dot"></span><span class="wf-dot"></span><span class="wf-dot"></span></div>
+                    <div class="wf-address-bar">https://agente-equigrup.onrender.com/#admin-cms-rag</div>
+                    <div>[ROL: Administrador Autenticado (OTP/Token)]</div>
+                </div>
+
+                <div class="wf-grid-12" style="padding: 20px;">
+                    <!-- COLUMNA IZQUIERDA (6 COLS): CRUD AUTOGESTIÓN WEB (BANNER / BLOG / PROYECTOS) -->
+                    <div class="wf-box" style="grid-column: span 6;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #27272a; padding-bottom: 8px; margin-bottom: 14px;">
+                            <strong class="mono">[MÓDULO A: AUTOGESTIÓN DE CONTENIDO WEB & BANNER HERO]</strong>
+                            <span class="wf-tag">Endpoint: POST /api/blog/publicar</span>
+                        </div>
+
+                        <div style="margin-bottom: 12px;">
+                            <label class="mono">Título de la Obra / Noticia para el Portal Público *</label>
+                            <input class="wf-input" value="Montaje y Alineación Láser Turbina Solar Turbines - Ecopetrol" readonly style="margin-top: 4px;">
+                        </div>
+
+                        <div class="wf-grid-12" style="margin-bottom: 12px;">
+                            <div style="grid-column: span 6;">
+                                <label class="mono">Vincular a Proyecto SQLite (proyecto_id_bd):</label>
+                                <input class="wf-input" value="[#18] EG24-184S Planta Galán Cenit" readonly style="margin-top: 4px;">
+                            </div>
+                            <div style="grid-column: span 6;">
+                                <label class="mono">Categoría de Especialidad:</label>
+                                <input class="wf-input" value="Normas API 686 & Grouting Epóxico" readonly style="margin-top: 4px;">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 12px;">
+                            <label class="mono">Resumen Ejecutivo y Contenido Técnico *</label>
+                            <div class="wf-box-dashed" style="height: 70px; margin-top: 4px; font-size: 12px;">
+                                Ejecución de nivelación geométrica, vaciado de grout Chockfast Red y verificación de coplanaridad bajo estándar API RP 686...
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 12px;">
+                            <label class="mono">Fotografía / Video de Obra o Informe PDF Adjunto:</label>
+                            <div class="wf-placeholder-img" style="height: 75px; margin-top: 4px;">
+                                [DROPZONE MULTIMEDIA: Arrastrar JPG, PNG, MP4 o PDF aquí -> /data/uploads/]
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
+                            <span class="mono">[☑ Destacar en Banner Hero Principal de la Landing]</span>
+                            <span class="wf-btn wf-btn-primary">[💾 Publicar y Actualizar Portal Web]</span>
+                        </div>
+                    </div>
+
+                    <!-- COLUMNA DERECHA (6 COLS): AUDITORÍA DOCUMENTAL Y CONTROL DE INDEXACIÓN RAG -->
+                    <div class="wf-box" style="grid-column: span 6;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #27272a; padding-bottom: 8px; margin-bottom: 14px;">
+                            <strong class="mono">[MÓDULO B: GESTOR DE ARCHIVOS & AUDITORÍA DE INDEXACIÓN RAG]</strong>
+                            <span class="wf-tag">BD: equigrup_rag.db (109 Chunks)</span>
+                        </div>
+
+                        <!-- SUBIDA DE NUEVO MANUAL AL RAG -->
+                        <div class="wf-box-dashed" style="margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong style="font-size: 12.5px;">Ingestar Nuevo Documento al Corpus RAG (.pdf / .docx)</strong>
+                                <div class="mono" style="color: #52525b;">Extrae texto con PyPDF/python-docx y genera fragmentos en SQLite</div>
+                            </div>
+                            <span class="wf-btn">[📤 Subir & Re-Indexar]</span>
+                        </div>
+
+                        <!-- TABLA DE AUDITORÍA DE INDEXACIÓN -->
+                        <table class="wf-table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre Archivo (Carpeta Módulo)</th>
+                                    <th>Formato / KB</th>
+                                    <th>Estado RAG</th>
+                                    <th>Acción Admin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="mono">API-686</td>
+                                    <td>API 686.pdf <span class="mono">(0.0. NORMATIVA)</span></td>
+                                    <td class="mono">.pdf / 4120 KB</td>
+                                    <td><span class="wf-tag">[Sí - 42 Chunks]</span></td>
+                                    <td class="mono">[🔄 Re-Indexar]</td>
+                                </tr>
+                                <tr>
+                                    <td class="mono">EG23-133S</td>
+                                    <td>INFORME SIST BOMBEO VEOLIA FEMSA.docx</td>
+                                    <td class="mono">.docx / 2374 KB</td>
+                                    <td><span class="wf-tag">[Sí - 18 Chunks]</span></td>
+                                    <td class="mono">[🔄 Re-Indexar]</td>
+                                </tr>
+                                <tr>
+                                    <td class="mono">EG23-139S</td>
+                                    <td>INFORME NIVELACION BOMBA BOOSTER TAG 36503.pdf</td>
+                                    <td class="mono">.pdf / 770 KB</td>
+                                    <td><span class="wf-tag">[No Indexado]</span></td>
+                                    <td class="mono">[⚡ Indexar Ahora]</td>
+                                </tr>
+                                <tr>
+                                    <td class="mono">PAC-EG-073</td>
+                                    <td>PROCEDIMIENTO PERNOS DE ANCLAJE.pdf</td>
+                                    <td class="mono">.pdf / 615 KB</td>
+                                    <td><span class="wf-tag">[Sí - 15 Chunks]</span></td>
+                                    <td class="mono">[🔄 Re-Indexar]</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function showWf(id, btn) {
+            document.querySelectorAll('.wf-screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.wf-tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active');
+        }
+    </script>
+</body>
+</html>
+

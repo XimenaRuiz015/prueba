@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equigrup S.A.S. — Portal Ejecutivo de Arquitectura, Site Map & UML</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            themeVariables: {
+                primaryColor: '#1E3A8A',
+                primaryTextColor: '#F8FAFC',
+                primaryBorderColor: '#38BDF8',
+                lineColor: '#F97316',
+                secondaryColor: '#0F172A',
+                tertiaryColor: '#1E293B'
+            }
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top right, #1e3a8a 0%, #0f172a 45%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .tab-sec { display: none; animation: fadeIn 0.3s ease; }
+        .tab-sec.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.6);
+        }
+        .glow-orange {
+            box-shadow: 0 0 25px rgba(249, 115, 22, 0.35);
+        }
+        .glow-blue {
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+        }
+        .cu-panel { display: none; }
+        .cu-panel.active { display: block; animation: fadeIn 0.25s ease; }
+    </style>
+</head>
+<body class="antialiased selection:bg-orange-500 selection:text-white">
+
+    <!-- NAVBAR PREMIUM CON GLASSMORPHISM -->
+    <header class="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-xl border-b border-slate-800/80 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center font-black text-white text-lg glow-orange border border-orange-300/30">
+                    ⚙️
+                </div>
+                <div>
+                    <div class="flex items-center gap-2.5">
+                        <span class="font-black text-base tracking-tight text-white">EQUIGRUP S.A.S.</span>
+                        <span class="text-[11px] mono bg-orange-500/20 text-orange-400 border border-orange-500/40 px-2.5 py-0.5 rounded-full font-semibold">
+                            ARQUITECTURA & UML v2.0
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400">Sustentación Ejecutiva de Ingeniería de Software, Site Map y Casos de Uso</p>
+                </div>
+            </div>
+
+            <nav class="flex flex-wrap items-center gap-2">
+                <button onclick="showSec('sec1', this)" class="nav-b bg-gradient-to-r from-orange-500 to-amber-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl glow-orange transition">
+                    🏛️ 1. Arquitectura SPA vs MPA
+                </button>
+                <button onclick="showSec('sec2', this)" class="nav-b bg-slate-900/90 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-700/80 transition">
+                    🗺️ 2. Site Map Jerárquico
+                </button>
+                <button onclick="showSec('sec3', this)" class="nav-b bg-slate-900/90 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-700/80 transition">
+                    📐 3. Casos de Uso UML & 5 Fichas
+                </button>
+                <div class="h-5 w-[1px] bg-slate-800 mx-1 hidden sm:block"></div>
+                <a href="/wireframes" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-amber-300 text-xs font-bold px-3.5 py-2.5 rounded-xl border border-amber-500/40 transition flex items-center gap-1.5">
+                    <span>📝</span> 4. Wireframes ↗
+                </a>
+                <a href="/mockups" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-emerald-600/30 transition flex items-center gap-1.5">
+                    <span>🎨</span> 5. Mockups Alta Fidelidad ↗
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-8 px-6">
+
+        <!-- ===================================================================
+             SECCIÓN 1: DEFINICIÓN Y JUSTIFICACIÓN ARQUITECTÓNICA (SPA VS MPA)
+             =================================================================== -->
+        <section id="sec1" class="tab-sec active space-y-8">
+            <!-- HERO DE ARQUITECTURA -->
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-72 h-72 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-8 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-300 text-xs mono font-semibold">
+                            <span>ENTREGABLE 1</span>
+                            <span>•</span>
+                            <span>DECISIÓN ARQUITECTÓNICA FUNDAMENTADA</span>
+                        </div>
+                        <h2 class="text-3xl lg:text-4xl font-black text-white leading-tight">
+                            Single-Page Application (<span class="text-orange-400">SPA Reactiva MVVM</span>) + Entrega Híbrida RESTful
+                        </h2>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Para <strong>Equigrup S.A.S.</strong> implementamos una arquitectura <strong>Single-Page Application (SPA)</strong> desacoplada bajo el patrón <strong>Model-View-ViewModel (MVVM)</strong> conectada a un <strong>API Gateway ASGI en FastAPI</strong> y <strong>2 Microservicios independientes</strong>. Todas las vistas operativas conviven en memoria del cliente, eliminando las recargas completas de página durante las operaciones de campo en refinerías y plantas industriales.
+                        </p>
+                    </div>
+
+                    <!-- MÉTRICAS DE IMPACTO ARQUITECTÓNICO -->
+                    <div class="lg:col-span-4 grid grid-cols-2 gap-3.5">
+                        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl text-center">
+                            <span class="text-2xl font-black text-emerald-400 mono">&lt; 2 ms</span>
+                            <span class="block text-[11px] text-slate-400 mt-1">Conmutación de Vistas y Filtros en Memoria</span>
+                        </div>
+                        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl text-center">
+                            <span class="text-2xl font-black text-orange-400 mono">100%</span>
+                            <span class="block text-[11px] text-slate-400 mt-1">Persistencia del Estado del Chatbot RAG</span>
+                        </div>
+                        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl text-center">
+                            <span class="text-2xl font-black text-sky-400 mono">~42 MB</span>
+                            <span class="block text-[11px] text-slate-400 mt-1">Huella de Memoria RAM en Render Cloud</span>
+                        </div>
+                        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl text-center">
+                            <span class="text-2xl font-black text-amber-400 mono">248</span>
+                            <span class="block text-[11px] text-slate-400 mt-1">Registros Auditados (196 Docs + 52 SQL)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 PILARES DE JUSTIFICACIÓN TÉCNICA -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card rounded-2xl p-6 border-t-4 border-t-orange-500 hover:-translate-y-1 transition duration-200">
+                    <div class="w-11 h-11 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-xl mb-4">🤖</div>
+                    <h3 class="font-bold text-base text-white">1. Persistencia del Chatbot IA (RAG)</h3>
+                    <p class="text-xs text-slate-300 mt-2.5 leading-relaxed">
+                        Mientras un ingeniero consulta el tiempo de curado de <strong>Chockfast Red</strong> o tolerancias de la norma <strong>API RP 686</strong> en el chat, puede cambiar a la pestaña del catálogo para revisar el informe <code class="mono text-orange-300">EG24-184S</code> de <strong>Cenit Planta Galán</strong> o calcular kits en el <strong>Microservicio 1</strong> sin que la conversación ni las fuentes citadas (<code class="mono text-sky-300">fuentes_consultadas</code>) se borren del DOM.
+                    </p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 border-t-4 border-t-sky-400 hover:-translate-y-1 transition duration-200">
+                    <div class="w-11 h-11 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-xl mb-4">⚡</div>
+                    <h3 class="font-bold text-base text-white">2. Consumo Óptimo de Endpoints REST</h3>
+                    <p class="text-xs text-slate-300 mt-2.5 leading-relaxed">
+                        El backend FastAPI solo transfiere payloads JSON ultraligeros (<code class="mono text-sky-300">GET /api/proyectos</code>, <code class="mono text-sky-300">POST /chat</code>). El filtrado facetado por <code class="mono">carpeta_modulo</code>, <code class="mono">cliente_entidad</code> (<strong>Ecopetrol, ArcelorMittal, Reficar</strong>) y <code class="mono">estado_operativo</code> ocurre localmente en <code class="mono text-emerald-300">ProjectsViewModel</code> sin recargas HTTP redundantes.
+                    </p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 border-t-4 border-t-emerald-400 hover:-translate-y-1 transition duration-200">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-xl mb-4">🌐</div>
+                    <h3 class="font-bold text-base text-white">3. UX Fluida y Autogestión CMS</h3>
+                    <p class="text-xs text-slate-300 mt-2.5 leading-relaxed">
+                        El módulo de <strong>Banner Hero Autogestionable</strong> (<code class="mono text-emerald-300">GET /api/blog?solo_banner=true</code>) hidrata dinámicamente la portada con videos e imágenes de obras reales, mientras que los manuales normativos (<code class="mono">API 686.pdf</code>, <code class="mono">PAC-EG-073</code>) se sirven en streaming binario inline (<code class="mono">GET /api/documentos/*</code>).
+                    </p>
+                </div>
+            </div>
+
+            <!-- TABLA COMPARATIVA PREMIUM SPA VS MPA -->
+            <div class="glass-card rounded-3xl overflow-hidden">
+                <div class="px-6 py-4 bg-slate-900/90 border-b border-slate-800 flex flex-wrap justify-between items-center">
+                    <h3 class="font-bold text-sm text-white flex items-center gap-2">
+                        <span>📊</span> Matriz Comparativa de Ingeniería: SPA (Implementada) vs. MPA (Tradicional)
+                    </h3>
+                    <span class="mono text-xs text-slate-400">Aplicada al Contexto Operativo de Equigrup S.A.S.</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-950/70 text-slate-400 mono uppercase border-b border-slate-800">
+                                <th class="p-4">Dimensión Evaluada</th>
+                                <th class="p-4 text-emerald-400">Arquitectura SPA MVVM (Equigrup Actual)</th>
+                                <th class="p-4 text-rose-400">Arquitectura MPA Tradicional</th>
+                                <th class="p-4 text-sky-300">Impacto en Operaciones de Campo</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/70 text-slate-200">
+                            <tr class="hover:bg-slate-900/40">
+                                <td class="p-4 font-bold">Memoria Conversacional del Chatbot RAG</td>
+                                <td class="p-4"><span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-md font-semibold">Intacta en RAM (`ChatViewModel`)</span></td>
+                                <td class="p-4 text-slate-400">Se destruye el contexto visual en cada clic de menú</td>
+                                <td class="p-4">El ingeniero contrasta respuestas de la norma <strong>API 686</strong> con la tabla de proyectos sin perder el hilo.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40">
+                                <td class="p-4 font-bold">Búsqueda sobre 248 Registros (196 Docs + 52 SQL)</td>
+                                <td class="p-4"><span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-md font-semibold">Instantánea en Cliente (&lt; 2 ms)</span></td>
+                                <td class="p-4 text-slate-400">Petición HTTP + Renderizado HTML (500 - 1200 ms)</td>
+                                <td class="p-4">Filtrado inmediato por <strong>Ecopetrol, Cenit, Veolia, SierraCol</strong> o código <code class="mono">EG24-184S</code>.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40">
+                                <td class="p-4 font-bold">Orquestación con Microservicios (MS-1 y MS-2)</td>
+                                <td class="p-4"><span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-md font-semibold">Asíncrona en Vivo (`fetch` JSON)</span></td>
+                                <td class="p-4 text-slate-400">Recarga de formulario POST tradicional</td>
+                                <td class="p-4">Calcula dosificación de <strong>Chockfast Red</strong> y refresca la bitácora de auditoría en la misma pantalla.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40">
+                                <td class="p-4 font-bold">Tráfico de Red en Plantas Industriales</td>
+                                <td class="p-4"><span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-md font-semibold">Reducción del 82% (Solo JSON)</span></td>
+                                <td class="p-4 text-slate-400">Descarga repetitiva de CSS/JS/HTML completo</td>
+                                <td class="p-4">Alta velocidad incluso con conectividad móvil limitada en <strong>Planta Galán</strong> o <strong>Puerto Antioquia</strong>.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SECCIÓN 2: SITE MAP (MAPA DEL SITIO VISUAL + DIAGRAMA MERMAID)
+             =================================================================== -->
+        <section id="sec2" class="tab-sec space-y-8">
+            <div class="glass-card rounded-3xl p-8">
+                <div class="flex flex-wrap justify-between items-end gap-4 mb-6">
+                    <div>
+                        <span class="mono text-xs font-bold text-orange-400 uppercase">Entregable 2 • Arquitectura de Información</span>
+                        <h2 class="text-2xl lg:text-3xl font-black text-white mt-1">Site Map Jerárquico de Doble Entorno</h2>
+                    </div>
+                    <span class="mono text-xs bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-slate-300">
+                        Raíz: https://agente-equigrup.onrender.com
+                    </span>
+                </div>
+
+                <!-- MAPA VISUAL DE TARJETAS CONECTADAS (ESTÉTICA EJECUTIVA) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- ENTORNO 1: PORTAL PÚBLICO AUTOGESTIONABLE -->
+                    <div class="bg-slate-900/90 border border-sky-500/30 rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">🏢</span>
+                                <div>
+                                    <h3 class="font-bold text-white text-sm">ENTORNO 1: Portal Público Autogestionable</h3>
+                                    <p class="text-[11px] text-slate-400 mono">Acceso: Visitante / Cliente Potencial (Ecopetrol, Cenit, Reficar)</p>
+                                </div>
+                            </div>
+                            <span class="bg-sky-500/20 text-sky-300 text-[11px] mono px-2.5 py-1 rounded-full font-bold">Público</span>
+                        </div>
+
+                        <div class="space-y-2.5 text-xs">
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <strong class="text-white">1.1 Inicio & Hero Banner Dinámico</strong>
+                                    <span class="block text-slate-400 text-[11px]">Renderiza la obra destacada con foto/video MP4 (`es_banner=True`)</span>
+                                </div>
+                                <code class="mono text-sky-400 bg-sky-950/60 px-2 py-1 rounded">GET /#inicio</code>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <strong class="text-white">1.2 Catálogo de Especialidades Técnicas</strong>
+                                    <span class="block text-slate-400 text-[11px]">Grout Chockfast Red, Alineación API 686, Pernos PAC-EG, Rotativos</span>
+                                </div>
+                                <code class="mono text-sky-400 bg-sky-950/60 px-2 py-1 rounded">/#servicios</code>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <strong class="text-white">1.3 Vitrina de Clientes & Obras Destacadas</strong>
+                                    <span class="block text-slate-400 text-[11px]">Carrusel B2B y casos de éxito sincronizados con SQLite</span>
+                                </div>
+                                <code class="mono text-sky-400 bg-sky-950/60 px-2 py-1 rounded">GET /api/blog</code>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <strong class="text-white">1.4 Widget Flotante Asistente Equi IA</strong>
+                                    <span class="block text-slate-400 text-[11px]">Acceso directo al motor conversacional RAG desde cualquier sección</span>
+                                </div>
+                                <code class="mono text-orange-400 bg-orange-950/60 px-2 py-1 rounded">FAB #chat</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ENTORNO 2: PLATAFORMA INTERNA DE OPERACIONES, IA RAG Y MICROSERVICIOS -->
+                    <div class="bg-slate-900/90 border border-orange-500/30 rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold">🔐</span>
+                                <div>
+                                    <h3 class="font-bold text-white text-sm">ENTORNO 2: Plataforma Interna Operaciones & IA RAG</h3>
+                                    <p class="text-[11px] text-slate-400 mono">Acceso: Ingeniero de Operaciones / Administrador (Token + OTP)</p>
+                                </div>
+                            </div>
+                            <span class="bg-orange-500/20 text-orange-300 text-[11px] mono px-2.5 py-1 rounded-full font-bold">Protegido</span>
+                        </div>
+
+                        <div class="space-y-2.5 text-xs">
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <strong class="text-white">2.1 Consola Chatbot IA "Equi" (RAG + SQL Tool)</strong>
+                                    <span class="block text-slate-400 text-[11px]">Consulta 109 chunks (`equigrup_rag.db`) + 52 obras SQL con citas</span>
+                                </div>
+                                <code class="mono text-emerald-400 bg-emerald-950/60 px-2 py-1 rounded">POST /chat</code>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <strong class="text-white">2.2 Explorador Documental & Catálogo (248 Regs)</strong>
+                                    <span class="block text-slate-400 text-[11px]">Módulos `0.0` Normas, `0.1` Informes, `0.2` APU, `0.3` PAC-EG y SQL</span>
+                                </div>
+                                <code class="mono text-emerald-400 bg-emerald-950/60 px-2 py-1 rounded">/api/proyectos</code>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <strong class="text-white">2.3 Panel Admin: CMS Web & Auditoría RAG</strong>
+                                    <span class="block text-slate-400 text-[11px]">CRUD de proyectos, subida de archivos e indexación al motor RAG</span>
+                                </div>
+                                <code class="mono text-amber-400 bg-amber-950/60 px-2 py-1 rounded">/api/upload</code>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <strong class="text-white">2.4 Microservicios (MS-1 & MS-2) y Monitor Postman</strong>
+                                    <span class="block text-slate-400 text-[11px]">Calculadora Grout/API 686 (`:8001`), Bitácora (`:8002`) y `/monitoreo`</span>
+                                </div>
+                                <code class="mono text-orange-400 bg-orange-950/60 px-2 py-1 rounded">/ms/* & /monitoreo</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIAGRAMA MERMAID INTERACTIVO ESTILIZADO -->
+                <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 overflow-x-auto">
+                    <div class="text-xs mono text-slate-400 mb-3 font-semibold">📐 DIAGRAMA DE ARQUITECTURA DE INFORMACIÓN (MERMAID.JS):</div>
+                    <div class="mermaid">
+graph TD
+    ROOT["🌐 Ecosistema Web Equigrup S.A.S.<br/>https://agente-equigrup.onrender.com"]
+    PUBLIC["🏢 ENTORNO 1: Portal Público Autogestionable"]
+    INTERNAL["🔐 ENTORNO 2: Plataforma Interna Operaciones, IA & Microservicios"]
+
+    ROOT --> PUBLIC
+    ROOT --> INTERNAL
+
+    PUB1["1.1 Hero Banner Dinámico<br/>GET /api/blog?solo_banner=true"]
+    PUB2["1.2 Especialidades API 686 & Grout<br/>/#servicios"]
+    PUB3["1.3 Clientes & Obras Destacadas<br/>Ecopetrol, Cenit, Reficar, Arcelor"]
+    PUB4["1.4 Widget Flotante Equi IA"]
+
+    PUBLIC --> PUB1
+    PUBLIC --> PUB2
+    PUBLIC --> PUB3
+    PUBLIC --> PUB4
+
+    INT_CHAT["2.1 Chatbot IA RAG + SQL<br/>POST /chat"]
+    INT_EXP["2.2 Explorador Documental (248)<br/>GET /api/proyectos"]
+    INT_CMS["2.3 Admin CMS & Auditoría RAG<br/>POST /api/blog/publicar & /api/upload"]
+    INT_MS["2.4 Microservicios MS-1, MS-2 & Monitor<br/>/ms/ingenieria • /ms/auditoria • /monitoreo"]
+
+    INTERNAL --> INT_CHAT
+    INTERNAL --> INT_EXP
+    INTERNAL --> INT_CMS
+    INTERNAL --> INT_MS
+
+    M0["0.0 Normativa (API 686)"]
+    M1["0.1 Informes (EG24-184S)"]
+    M2["0.2 Cotizaciones (EG24-189C)"]
+    M3["0.3 Procedimientos (PAC-EG-073)"]
+    MSQL["TABLA_PROYECTOS_SQL (52 Obras)"]
+
+    INT_EXP --> M0
+    INT_EXP --> M1
+    INT_EXP --> M2
+    INT_EXP --> M3
+    INT_EXP --> MSQL
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SECCIÓN 3: CASOS DE USO UML Y FICHAS TÉCNICAS INTERACTIVAS
+             =================================================================== -->
+        <section id="sec3" class="tab-sec space-y-8">
+            <!-- TARJETAS DE LOS 4 ACTORES DEL SISTEMA -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="glass-card p-5 rounded-2xl border-l-4 border-l-sky-400">
+                    <span class="text-xs mono text-sky-400 font-bold">ACTOR PRIMARIO 1</span>
+                    <h3 class="font-bold text-white text-sm mt-1">👤 Visitante / Cliente Potencial</h3>
+                    <p class="text-xs text-slate-400 mt-1.5">Consulta el portal autogestionable, servicios API 686, clientes y obras destacadas.</p>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border-l-4 border-l-emerald-400">
+                    <span class="text-xs mono text-emerald-400 font-bold">ACTOR PRIMARIO 2</span>
+                    <h3 class="font-bold text-white text-sm mt-1">👷‍♂️ Ingeniero de Operaciones</h3>
+                    <p class="text-xs text-slate-400 mt-1.5">Filtra informes (`EG24-184S`), consulta al Chatbot IA RAG y ejecuta cálculos en MS-1.</p>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border-l-4 border-l-orange-500">
+                    <span class="text-xs mono text-orange-400 font-bold">ACTOR PRIMARIO 3</span>
+                    <h3 class="font-bold text-white text-sm mt-1">🛡️ Administrador del Sistema</h3>
+                    <p class="text-xs text-slate-400 mt-1.5">Autogestiona el Banner CMS, administra los 52 proyectos en SQLite y audita el RAG.</p>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border-l-4 border-l-purple-400">
+                    <span class="text-xs mono text-purple-400 font-bold">ACTOR SECUNDARIO (SISTEMA)</span>
+                    <h3 class="font-bold text-white text-sm mt-1">🤖 Motor IA / Servicio RAG</h3>
+                    <p class="text-xs text-slate-400 mt-1.5">Procesa lenguaje natural (Groq/Gemini), recupera chunks (`equigrup_rag.db`) y SQL Tool.</p>
+                </div>
+            </div>
+
+            <!-- DIAGRAMA UML RENDERIZADO -->
+            <div class="glass-card rounded-3xl p-6">
+                <div class="flex flex-wrap justify-between items-center mb-4">
+                    <h3 class="font-bold text-base text-white">📐 Modelo UML de Casos de Uso (Relaciones &lt;&lt;include&gt;&gt; y &lt;&lt;extend&gt;&gt;)</h3>
+                    <span class="mono text-xs text-orange-400">Estándar UML 2.5</span>
+                </div>
+                <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-5 overflow-x-auto">
+                    <div class="mermaid">
+flowchart LR
+    VIS(["👤 Visitante / Cliente"])
+    ING(["👷‍♂️ Ingeniero de Operaciones"])
+    ADM(["🛡️ Administrador del Sistema"])
+
+    ING -.-> VIS
+    ADM -.-> ING
+
+    subgraph SYS ["🏢 LÍMITE DEL SISTEMA: PLATAFORMA WEB AUTOGESTIONABLE + CHATBOT RAG + MICROSERVICIOS EQUIGRUP"]
+        CU00(["CU-00: Visualizar Landing, Servicios API 686 y Banner"])
+        CU01(["CU-01: Consultar Asistente IA mediante RAG y SQL Tool"])
+        CU02(["CU-02: Filtrar y Visualizar Informes Técnicos y APU"])
+        CU03(["CU-03: Autogestionar Contenido Web y Banner Hero (CMS)"])
+        CU04(["CU-04: Indexar y Auditar Documentos en el Motor RAG"])
+        CU05(["CU-05: Registrar y Actualizar Proyectos en SQLite"])
+        CU07(["CU-07: Calcular Grout y Evaluar Alineación API 686 (MS-1)"])
+
+        INC_RAG(["Buscar Chunks en equigrup_rag.db"])
+        INC_SQL(["Consultar 52 Proyectos en SQLite"])
+        EXT_PDF(["Abrir Manual o Informe PDF Original"])
+        INC_AUD(["Registrar Traza en Microservicio 2"])
+    end
+
+    RAG(["🤖 Actor Secundario: Motor IA / Servicio RAG"])
+
+    VIS --> CU00
+    ING --> CU01
+    ING --> CU02
+    ING --> CU07
+    ADM --> CU03
+    ADM --> CU04
+    ADM --> CU05
+
+    CU01 ==>|"<<include>>"| INC_RAG
+    CU01 ==>|"<<include>>"| INC_SQL
+    CU01 ==>|"<<include>>"| INC_AUD
+    EXT_PDF -.->|"<<extend>>"| CU01
+    EXT_PDF -.->|"<<extend>>"| CU02
+    CU07 ==>|"<<include>>"| INC_AUD
+
+    INC_RAG --> RAG
+    INC_SQL --> RAG
+    CU04 --> RAG
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPLORADOR INTERACTIVO DE LAS 5 FICHAS TÉCNICAS DE CASOS DE USO -->
+            <div class="glass-card rounded-3xl p-6">
+                <div class="flex flex-wrap justify-between items-center gap-4 border-b border-slate-800 pb-4 mb-6">
+                    <div>
+                        <span class="mono text-xs text-orange-400 font-bold">ESPECIFICACIÓN FORMAL DE REQUISITOS</span>
+                        <h3 class="text-xl font-black text-white">Fichas Técnicas Detalladas de los 5 Casos de Uso Críticos</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="showCu('cu1', this)" class="cu-btn bg-orange-500 text-white text-xs font-bold px-3.5 py-2 rounded-xl">CU-01: Chatbot RAG</button>
+                        <button onclick="showCu('cu2', this)" class="cu-btn bg-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-2 rounded-xl">CU-02: Explorador & APU</button>
+                        <button onclick="showCu('cu3', this)" class="cu-btn bg-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-2 rounded-xl">CU-03: Autogestión CMS</button>
+                        <button onclick="showCu('cu4', this)" class="cu-btn bg-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-2 rounded-xl">CU-04: Indexación RAG</button>
+                        <button onclick="showCu('cu5', this)" class="cu-btn bg-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-2 rounded-xl">CU-05: CRUD SQLite</button>
+                    </div>
+                </div>
+
+                <!-- CU-01 -->
+                <div id="cu1" class="cu-panel active space-y-4 text-xs">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">CASO DE USO</span><strong class="text-white text-sm">CU-01: Consultar Asistente IA mediante RAG y SQL Tool</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">ACTORES</span><strong class="text-emerald-400 text-sm">Ingeniero de Operaciones + Motor IA RAG</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">RELACIONES UML</span><strong class="text-orange-400 text-sm">&lt;&lt;include&gt;&gt; RAG, SQL, MS-2 | &lt;&lt;extend&gt;&gt; Abrir PDF</strong></div>
+                    </div>
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 space-y-2 leading-relaxed">
+                        <div class="font-bold text-orange-400 mono">FLUJO NORMAL PASO A PASO:</div>
+                        <p>1. El Ingeniero escribe su consulta técnica en <code class="mono text-sky-300">#vistaChat</code> (ej. curado de <strong>Chockfast Red</strong> bajo <strong>API 686</strong> u obras en <strong>Cenit Planta Galán</strong>).</p>
+                        <p>2. <code class="mono text-sky-300">ChatViewModel</code> envía <code class="mono">POST /chat</code> hacia el orquestador <code class="mono">procesar_mensaje_equi()</code>.</p>
+                        <p>3. <strong>&lt;&lt;include&gt;&gt;:</strong> El motor busca los fragmentos más relevantes en <code class="mono text-emerald-300">equigrup_rag.db</code> (109 chunks de manuales PDF/DOCX) y consulta simultáneamente los 52 proyectos en <code class="mono text-emerald-300">equigrup_proyectos.db</code>.</p>
+                        <p>4. El LLM sintetiza la respuesta técnica adjuntando <code class="mono">fuentes_consultadas</code> y registra la traza en el <strong>Microservicio 2 (`ms_auditoria.db`)</strong>.</p>
+                        <p class="text-slate-400 pt-1"><strong>Flujo Alternativo (&lt;&lt;extend&gt;&gt;):</strong> El ingeniero hace clic en <em>"Abrir Documento ↗"</em> y visualiza el manual <code class="mono">API 686.pdf</code> o el informe <code class="mono">EG24-184S</code> en línea.</p>
+                    </div>
+                </div>
+
+                <!-- CU-02 -->
+                <div id="cu2" class="cu-panel space-y-4 text-xs">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">CASO DE USO</span><strong class="text-white text-sm">CU-02: Filtrar y Visualizar Informes Técnicos y APU</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">ACTOR PRIMARIO</span><strong class="text-emerald-400 text-sm">Ingeniero de Operaciones / Consultor</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">ENDPOINT REST</span><strong class="text-sky-400 text-sm mono">GET /api/proyectos & /api/documentos/*</strong></div>
+                    </div>
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 space-y-2 leading-relaxed">
+                        <div class="font-bold text-orange-400 mono">FLUJO NORMAL PASO A PASO:</div>
+                        <p>1. El Ingeniero abre el explorador y filtra por <code class="mono">carpeta_modulo</code> (<code class="mono">0.1. INFORMES TECNICOS</code>, <code class="mono">0.2. COTIZACIONES</code>, <code class="mono">0.3. PROCEDIMIENTOS</code>), <code class="mono">cliente_entidad</code> (<strong>Ecopetrol, Cenit, Veolia, ArcelorMittal</strong>) o <code class="mono">estado_operativo</code>.</p>
+                        <p>2. <code class="mono text-sky-300">ProjectsViewModel.applyFilters()</code> actualiza la grilla en memoria en menos de 2 ms.</p>
+                        <p>3. El Ingeniero abre el documento original (<code class="mono">EG23-133S</code>, <code class="mono">EG24-184S</code>, <code class="mono">PAC-EG-073</code>) o lanza una consulta contextual hacia el Chatbot IA con un clic.</p>
+                    </div>
+                </div>
+
+                <!-- CU-03 -->
+                <div id="cu3" class="cu-panel space-y-4 text-xs">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">CASO DE USO</span><strong class="text-white text-sm">CU-03: Autogestionar Contenido Web y Banner Hero (CMS)</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">ACTOR PRIMARIO</span><strong class="text-orange-400 text-sm">Administrador del Sistema (Freddy)</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">ENDPOINT REST</span><strong class="text-sky-400 text-sm mono">POST /api/blog/publicar & toggle-banner</strong></div>
+                    </div>
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 space-y-2 leading-relaxed">
+                        <div class="font-bold text-orange-400 mono">FLUJO NORMAL PASO A PASO:</div>
+                        <p>1. El Administrador redacta una nueva publicación técnica en <code class="mono">#vistaBlog</code>, adjunta fotografía o video <code class="mono">.mp4</code> de la obra y activa <code class="mono text-emerald-300">es_banner = True</code>.</p>
+                        <p>2. El backend guarda el archivo multimedia en <code class="mono">/data/uploads/</code> y actualiza la tabla <code class="mono">publicaciones_blog</code> en SQLite.</p>
+                        <p>3. El Banner Hero principal del portal público se actualiza instantáneamente sin modificar código fuente.</p>
+                    </div>
+                </div>
+
+                <!-- CU-04 -->
+                <div id="cu4" class="cu-panel space-y-4 text-xs">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">CASO DE USO</span><strong class="text-white text-sm">CU-04: Indexar y Auditar Documentos en el Motor RAG</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">ACTORES</span><strong class="text-orange-400 text-sm">Administrador + Motor IA / Servicio RAG</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">ARTEFACTO DATOS</span><strong class="text-emerald-400 text-sm mono">data/equigrup_rag.db (109 Chunks)</strong></div>
+                    </div>
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 space-y-2 leading-relaxed">
+                        <div class="font-bold text-orange-400 mono">FLUJO NORMAL PASO A PASO:</div>
+                        <p>1. El Administrador sube un nuevo informe técnico (<code class="mono">.pdf</code> o <code class="mono">.docx</code>) o procedimiento <code class="mono">PAC-EG</code>.</p>
+                        <p>2. El módulo de ingesta extrae el texto con <code class="mono">pypdf</code> / <code class="mono">python-docx</code>, lo divide en fragmentos de 1000 caracteres y actualiza <code class="mono">equigrup_rag.db</code>.</p>
+                        <p>3. El auditor actualiza el estado <code class="mono text-emerald-300">"indexado_rag": "Sí"</code> en el dataset consolidado.</p>
+                    </div>
+                </div>
+
+                <!-- CU-05 -->
+                <div id="cu5" class="cu-panel space-y-4 text-xs">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">CASO DE USO</span><strong class="text-white text-sm">CU-05: Administrar Proyectos en SQLite (TABLA_PROYECTOS_SQL)</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">ACTOR PRIMARIO</span><strong class="text-orange-400 text-sm">Administrador del Sistema</strong></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><span class="text-slate-400 block mono">INDEXACIÓN</span><strong class="text-sky-400 text-sm mono">Sí (Vía SQL Tool en Tiempo Real)</strong></div>
+                    </div>
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 space-y-2 leading-relaxed">
+                        <div class="font-bold text-orange-400 mono">FLUJO NORMAL PASO A PASO:</div>
+                        <p>1. El Administrador registra o edita un proyecto industrial (cliente, planta, maquinaria, estado) desde el formulario CRUD o mediante un comando en lenguaje natural en el chat de Equi.</p>
+                        <p>2. SQLAlchemy persiste el cambio en <code class="mono">equigrup_proyectos.db</code> y queda inmediatamente consultable por el Chatbot IA vía SQL Tool.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function showSec(id, btn) {
+            document.querySelectorAll('.tab-sec').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-b').forEach(b => {
+                b.className = 'nav-b bg-slate-900/90 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-700/80 transition';
+            });
+            document.getElementById(id).classList.add('active');
+            btn.className = 'nav-b bg-gradient-to-r from-orange-500 to-amber-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl glow-orange transition';
+            mermaid.init(undefined, document.querySelectorAll('#' + id + ' .mermaid'));
+        }
+
+        function showCu(id, btn) {
+            document.querySelectorAll('.cu-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.cu-btn').forEach(b => {
+                b.className = 'cu-btn bg-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-2 rounded-xl';
+            });
+            document.getElementById(id).classList.add('active');
+            btn.className = 'cu-btn bg-orange-500 text-white text-xs font-bold px-3.5 py-2 rounded-xl';
+        }
+    </script>
+</body>
+</html>

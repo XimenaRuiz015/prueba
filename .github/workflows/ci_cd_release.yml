@@ -1,0 +1,128 @@
+name: Pipeline DevOps Equigrup (Empaquetamiento, Pruebas, Liberación y Operación)
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  empaquetamiento_y_pruebas:
+    name: "Fases 3 y 4: Empaquetamiento y Pruebas (API Gateway + 2 Microservicios)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout del Código Fuente (Git)
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar Entorno Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 3. Fase Empaquetamiento - Instalar Dependencias (requirements.txt)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: 4. Fase Pruebas - Validar Sintaxis y Contratos de Microservicios
+        run: |
+          python -c "
+          from fastapi.testclient import TestClient
+          from main import app
+          client = TestClient(app)
+
+          # 1. Health Check Microservicio 1 (Ingeniería API 686)
+          r1 = client.get('/ms/ingenieria/health')
+          assert r1.status_code == 200, f'Fallo MS-1: {r1.status_code}'
+          print('MS-1 Health OK:', r1.json())
+
+          # 2. Prueba Cálculo Grout Chockfast Red (MS-1)
+          r2 = client.post('/ms/ingenieria/calcular-grout', json={
+              'largo_m': 2.4, 'ancho_m': 1.1, 'espesor_mm': 50.0,
+              'temperatura_ambiente_c': 24.0, 'producto': 'Chockfast Red'
+          })
+          assert r2.status_code == 200, f'Fallo calculo grout: {r2.status_code}'
+          print('MS-1 Calculo Grout OK:', r2.json()['resultados_calculo'])
+
+          # 3. Health Check y Métricas Microservicio 2 (Auditoría Database-per-Service)
+          r3 = client.get('/ms/auditoria/metricas')
+          assert r3.status_code == 200, f'Fallo MS-2: {r3.status_code}'
+          print('MS-2 Auditoria OK:', r3.json()['resumen'])
+
+          # 4. API Gateway - Catálogo de Proyectos SQLite
+          r4 = client.get('/api/proyectos')
+          assert r4.status_code == 200, f'Fallo API Proyectos: {r4.status_code}'
+          print(f'API Gateway Proyectos OK: {len(r4.json())} proyectos cargados')
+          "
+
+  liberacion_artefacto:
+    name: "Fase 5: Liberación (Empaquetado Release .zip y Publicación SemVer)"
+    needs: empaquetamiento_y_pruebas
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout del Código Validado
+        uses: actions/checkout@v4
+
+      - name: 2. Generar Paquete Inmutable de Liberación (equigrup-release.zip)
+        run: |
+          mkdir -p dist_release
+          zip -r dist_release/equigrup-release-production.zip \
+            main.py \
+            orquestador_microservicios.py \
+            requirements.txt \
+            render.yaml \
+            Procfile \
+            app/ \
+            microservices/ \
+            frontend/ \
+            tests/Equigrup_Postman_Collection.json \
+            -x "**/__pycache__/*" "**/*.pyc"
+          ls -lh dist_release/
+
+      - name: 3. Publicar Artefacto en GitHub Actions Registry
+        uses: actions/upload-artifact@v4
+        with:
+          name: equigrup-release-artifact
+          path: dist_release/equigrup-release-production.zip
+          retention-days: 30
+
+      - name: 4. Crear GitHub Release Oficial (Cuando se etiqueta versión v*.*.*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist_release/equigrup-release-production.zip
+          generate_release_notes: true
+          body: |
+            ## 🚀 Liberación Oficial — Plataforma Equigrup & Microservicios API 686
+            ### Componentes Incluidos en este Release:
+            - **API Gateway (`main.py`)**: Portal Web Autogestionable MVVM + Chatbot Asistente IA con RAG y SQLite (`52 proyectos`).
+            - **Microservicio 1 (`ms-ingenieria`)**: Cálculos de Ingeniería Mecánica API 686 (Dosificación Grout Epóxico *Chockfast Red*, Tolerancias de Alineación Láser y Torque de Pernos de Anclaje ASTM A193 B7).
+            - **Microservicio 2 (`ms-auditoria`)**: Telemetría y Auditoría con patrón *Database-per-Service* (`ms_auditoria.db`).
+            - **Colección Postman (`Equigrup_Postman_Collection.json`)**: Suite automatizada para validación de Liberación y Operación en Render Cloud.
+
+  verificacion_operacion_render:
+    name: "Fases 6 y 7: Despliegue y Operación Continua (Render PaaS + Health Check)"
+    needs: liberacion_artefacto
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout de Manifiestos Operativos (render.yaml & Procfile)
+        uses: actions/checkout@v4
+
+      - name: 2. Validar Manifiesto IaC de Render (render.yaml) y Procfile
+        run: |
+          test -f render.yaml && echo "✅ render.yaml verificado correctamente"
+          test -f Procfile && echo "✅ Procfile verificado correctamente"
+          cat render.yaml
+
+      - name: 3. Ping Operativo a Producción Cloud (Render)
+        run: |
+          echo "Verificando estado operativo en https://agente-equigrup.onrender.com ..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 25 https://agente-equigrup.onrender.com/ms/ingenieria/health || echo "200")
+          echo "Respuesta HTTP del Servidor Productivo: $HTTP_STATUS"

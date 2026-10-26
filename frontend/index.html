@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente Equigrup | Gestión Técnica y Documentación</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="stylesheet" href="/static/styles.css?v=15.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .projects-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)) !important;
+            gap: 22px !important;
+            padding: 24px 28px !important;
+            overflow-y: auto !important;
+            align-content: start !important;
+        }
+        .project-card {
+            background-color: #1e293b !important;
+            border: 1px solid #334155 !important;
+            border-radius: 14px !important;
+            padding: 20px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 14px !important;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35) !important;
+            height: 380px !important;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s !important;
+        }
+        .project-card:hover {
+            transform: translateY(-3px) !important;
+            border-color: #38bdf8 !important;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.5) !important;
+        }
+        .badge {
+            display: inline-block !important;
+            padding: 4px 8px !important;
+            border-radius: 6px !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+        }
+        .badge-status {
+            background-color: rgba(16, 185, 129, 0.15) !important;
+            color: #34d399 !important;
+            border: 1px solid rgba(16, 185, 129, 0.4) !important;
+        }
+        .badge-cat {
+            background-color: rgba(56, 189, 248, 0.15) !important;
+            color: #38bdf8 !important;
+            border: 1px solid rgba(56, 189, 248, 0.4) !important;
+        }
+        .project-card-title {
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #ffffff !important;
+            line-height: 1.35 !important;
+            height: 42px !important;
+            overflow: hidden !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+        }
+        .meta-row {
+            font-size: 12.5px !important;
+            color: #94a3b8 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 5px !important;
+        }
+        .meta-row div {
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+        .meta-row strong {
+            color: #e2e8f0 !important;
+        }
+        .desc-box {
+            background-color: #0f172a !important;
+            padding: 10px 12px !important;
+            border-radius: 8px !important;
+            border: 1px solid #283548 !important;
+            font-size: 12px !important;
+            color: #cbd5e1 !important;
+            line-height: 1.45 !important;
+            height: 72px !important;
+            overflow: hidden !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 3 !important;
+            -webkit-box-orient: vertical !important;
+        }
+        .btn-group {
+            display: flex !important;
+            gap: 8px !important;
+            margin-top: auto !important;
+            padding-top: 12px !important;
+            border-top: 1px solid #2d3d54 !important;
+        }
+        .btn-act {
+            flex: 1 !important;
+            padding: 8px 10px !important;
+            border-radius: 8px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            border: 1px solid #334155 !important;
+            background: #0f172a !important;
+            color: #f1f5f9 !important;
+            text-align: center !important;
+        }
+        .btn-act:hover {
+            background-color: #334155 !important;
+            border-color: #475569 !important;
+        }
+        .btn-ask {
+            background-color: rgba(37, 99, 235, 0.2) !important;
+            border-color: rgba(37, 99, 235, 0.5) !important;
+            color: #38bdf8 !important;
+        }
+        .btn-ask:hover {
+            background-color: #2563eb !important;
+            color: #ffffff !important;
+        }
+        .btn-del {
+            background-color: rgba(239, 68, 68, 0.1) !important;
+            border-color: rgba(239, 68, 68, 0.3) !important;
+            color: #f87171 !important;
+            max-width: 44px !important;
+        }
+        .btn-del:hover {
+            background-color: #ef4444 !important;
+            color: #ffffff !important;
+        }
+
+        /* DISEÑO MODERNO DE BOTONES Y DROPZONE */
+        .btn-primary-action {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+            color: #ffffff !important;
+            border: 1px solid #3b82f6 !important;
+            padding: 12px 28px !important;
+            border-radius: 10px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+            transition: all 0.2s ease !important;
+            width: auto !important;
+            min-width: 190px !important;
+            white-space: nowrap !important;
+        }
+        .btn-primary-action:hover {
+            background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .dropzone-box {
+            border: 2px dashed #3b82f6 !important;
+            background-color: rgba(15, 23, 42, 0.6) !important;
+            border-radius: 12px !important;
+            padding: 24px 20px !important;
+            text-align: center !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+        .dropzone-box:hover {
+            background-color: rgba(30, 41, 59, 0.8) !important;
+            border-color: #38bdf8 !important;
+        }
+        .dropzone-icon {
+            font-size: 32px !important;
+        }
+        .dropzone-text {
+            font-size: 13.5px !important;
+            color: #e2e8f0 !important;
+            font-weight: 500 !important;
+        }
+        .dropzone-hint {
+            font-size: 11.5px !important;
+            color: #94a3b8 !important;
+        }
+        .dropzone-filename {
+            font-size: 12.5px !important;
+            color: #34d399 !important;
+            font-weight: 600 !important;
+            margin-top: 4px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- PORTAL DE AUTENTICACIÓN Y SEGURIDAD (LOGIN & RECUPERACIÓN) -->
+    <div id="authPortalOverlay" class="auth-portal-overlay">
+        <div class="auth-backdrop-glow"></div>
+        <div class="auth-card-container">
+            
+            <!-- 1. VISTA DE INICIO DE SESIÓN -->
+            <div id="authViewLogin" class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-logo-badge">🤖</div>
+                    <div class="auth-brand-title">EQUIGRUP</div>
+                    <div class="auth-brand-sub">Control de Operaciones & IA</div>
+                    <h2>Portal de Acceso Seguro</h2>
+                    <p>Ingresa tus credenciales autorizadas para acceder al sistema.</p>
+                </div>
+
+                <form id="formLogin" onsubmit="ejecutarLogin(event)">
+                    <div class="auth-form-group">
+                        <label for="loginUsuario">Usuario o Correo</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">👤</span>
+                            <input type="text" id="loginUsuario" placeholder="Ej: freddy" required autocomplete="username">
+                        </div>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="loginPassword">Contraseña</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">🔒</span>
+                            <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+                            <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibility('loginPassword', this)" title="Mostrar/Ocultar contraseña">👁️</button>
+                        </div>
+                    </div>
+
+                    <div class="auth-row-actions">
+                        <label class="auth-checkbox-label">
+                            <input type="checkbox" id="loginRecordar" checked>
+                            <span>Recordar sesión</span>
+                        </label>
+                        <button type="button" class="auth-link-btn" onclick="mostrarVistaAuth('recuperar')">
+                            ¿Olvidaste tu contraseña?
+                        </button>
+                    </div>
+
+                    <div id="authLoginMsg" class="auth-msg-box" style="display: none;"></div>
+
+                    <button type="submit" id="btnLoginSubmit" class="auth-btn-primary">
+                        <span>🚀</span> Iniciar Sesión
+                    </button>
+                </form>
+
+                <div class="auth-footer-note">
+                    🔒 Acceso restringido para personal técnico y operativo de Equigrup.
+                </div>
+            </div>
+
+            <!-- 2. VISTA DE RECUPERAR CONTRASEÑA (SOLICITAR CÓDIGO) -->
+            <div id="authViewRecuperar" class="auth-card" style="display: none;">
+                <div class="auth-header">
+                    <div class="auth-logo-badge" style="background: rgba(56, 189, 248, 0.15); border-color: #38bdf8;">🔑</div>
+                    <h2>Recuperación de Acceso</h2>
+                    <p>Ingresa tu correo o usuario. Te enviaremos un código de seguridad de 6 dígitos para validar tu identidad:</p>
+                </div>
+
+                <form id="formRecuperar" onsubmit="solicitarCodigoRecuperacion(event)">
+                    <div class="auth-form-group">
+                        <label for="recuperarIdentificador">Correo Electrónico o Usuario</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">✉️</span>
+                            <input type="text" id="recuperarIdentificador" placeholder="andresmauri77@gmail.com o freddy" required>
+                        </div>
+                    </div>
+
+                    <div id="authRecuperarMsg" class="auth-msg-box" style="display: none;"></div>
+
+                    <button type="submit" id="btnRecuperarSubmit" class="auth-btn-primary">
+                        <span>📨</span> Enviar Código de Verificación
+                    </button>
+
+                    <div class="auth-back-link">
+                        <button type="button" class="auth-link-btn" onclick="mostrarVistaAuth('login')">
+                            ← Volver al Inicio de Sesión
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 3. VISTA DE VERIFICAR CÓDIGO Y CAMBIAR CONTRASEÑA -->
+            <div id="authViewCambiarPassword" class="auth-card" style="display: none;">
+                <div class="auth-header">
+                    <div class="auth-logo-badge" style="background: rgba(16, 185, 129, 0.15); border-color: #10b981;">🛡️</div>
+                    <h2>Verificación y Nueva Contraseña</h2>
+                    <p>Introduce el código de 6 dígitos enviado a <strong id="correoDestinoLabel" style="color: #38bdf8;">tu correo</strong> y define tu nueva contraseña:</p>
+                </div>
+
+                <form id="formCambiarPassword" onsubmit="guardarNuevaPassword(event)">
+                    <input type="hidden" id="resetEmailHidden">
+
+                    <div class="auth-form-group">
+                        <label for="resetCodigoOtp">Código de Verificación (6 Dígitos)</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">🔢</span>
+                            <input type="text" id="resetCodigoOtp" class="auth-otp-input" placeholder="123456" maxlength="6" required pattern="[0-9]{6}">
+                        </div>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="resetNuevaPassword">Nueva Contraseña</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">🔒</span>
+                            <input type="password" id="resetNuevaPassword" placeholder="Mínimo 4 caracteres" required minlength="4">
+                            <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibility('resetNuevaPassword', this)">👁️</button>
+                        </div>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="resetConfirmarPassword">Confirmar Nueva Contraseña</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">🔒</span>
+                            <input type="password" id="resetConfirmarPassword" placeholder="Repite la nueva contraseña" required minlength="4">
+                            <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibility('resetConfirmarPassword', this)">👁️</button>
+                        </div>
+                    </div>
+
+                    <div id="authCambiarMsg" class="auth-msg-box" style="display: none;"></div>
+
+                    <button type="submit" id="btnCambiarPassSubmit" class="auth-btn-primary">
+                        <span>💾</span> Actualizar Contraseña e Ingresar
+                    </button>
+
+                    <div class="auth-back-link">
+                        <button type="button" class="auth-link-btn" onclick="mostrarVistaAuth('login')">
+                            ← Cancelar y Volver
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="app-container" id="mainAppContainer">
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">🤖</div>
+                <div class="brand-text">
+                    <h2>EQUIGRUP</h2>
+                    <span>Operaciones & IA</span>
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+                <h3>Módulos</h3>
+                <button class="nav-btn active" id="navChat" onclick="cambiarVista('chat')">
+                    <span class="icon">💬</span> Chat con Equi
+                </button>
+                <button class="nav-btn" id="navVer" onclick="cambiarVista('proyectos')">
+                    <span class="icon">📊</span> Ver Proyectos
+                </button>
+                <button class="nav-btn" id="navAgregar" onclick="cambiarVista('agregar')">
+                    <span class="icon">➕</span> Agregar Proyecto
+                </button>
+                <button class="nav-btn" id="navMedia" onclick="cambiarVista('multimedia')">
+                    <span class="icon">📁</span> Subir Multimedia
+                </button>
+                <button class="nav-btn" id="navBlog" onclick="cambiarVista('blog')">
+                    <span class="icon">🌐</span> Blog & Banner Web
+                </button>
+                <button class="nav-btn" id="navMicroservicios" onclick="cambiarVista('microservicios')" style="border: 1px solid rgba(16, 185, 129, 0.35); background: rgba(16, 185, 129, 0.08);">
+                    <span class="icon">⚙️</span> Microservicios (MS 1 & 2)
+                </button>
+            </div>
+
+            <div class="status-card">
+                <div class="status-indicator">
+                    <span class="dot"></span>
+                    <span class="status-text">Equi Conectado</span>
+                </div>
+                <p class="status-desc">Base de Datos + RAG Activos</p>
+            </div>
+
+            <!-- FICHA DE SESIÓN DE USUARIO -->
+            <div class="user-session-card">
+                <div class="user-avatar-chip">👤</div>
+                <div class="user-info-chip">
+                    <span class="user-name" id="userDisplayName">Freddy</span>
+                    <span class="user-role">Administrador</span>
+                </div>
+                <button class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
+                    🚪 Salir
+                </button>
+            </div>
+
+            <footer class="sidebar-footer">
+                <p>Equigrup &copy; 2026</p>
+                <small>Gestión de Conocimiento</small>
+            </footer>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            
+            <!-- 1. VISTA: CHAT CON EQUI -->
+            <section id="vistaChat" class="view-section active">
+                <header class="content-header">
+                    <div class="header-info">
+                        <div class="avatar">🤖</div>
+                        <div>
+                            <h1>Asistente Inteligente Equi</h1>
+                            <p>Consulta manuales técnicos, proyectos de Equigrup y normas de ingeniería</p>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="messages-container" id="messagesContainer">
+                    <div class="message assistant-message">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                ¡Hola! Soy <strong>Equi</strong>, el asistente inteligente de <strong>Equigrup</strong>.<br><br>
+                                Tengo acceso a los <strong>manuales técnicos (API 686, pernos, compresores, Chockfast Red)</strong> y a los <strong>51 proyectos registrados</strong>.<br><br>
+                                ¿En qué puedo colaborarte hoy?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <span>Equi está consultando la documentación y base de datos...</span>
+                </div>
+
+                <footer class="chat-input-container">
+                    <form id="chatForm" onsubmit="enviarMensajeChat(event)">
+                        <textarea 
+                            id="userInput" 
+                            placeholder="¿Cómo puedo ayudarte? (Ej. ¿Qué proyectos tenemos de Arcelor? o actualiza el estado del proyecto #4)" 
+                            rows="1"
+                            onkeydown="handleKeyDown(event)"
+                            required
+                        ></textarea>
+                        <button type="submit" id="sendBtn" title="Enviar">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                            </svg>
+                        </button>
+                    </form>
+                    <div class="input-hint">
+                        Presiona <strong>Enter</strong> para enviar, <strong>Shift + Enter</strong> para salto de línea.
+                    </div>
+                </footer>
+            </section>
+
+            <!-- 2. VISTA: VER PROYECTOS -->
+            <section id="vistaProyectos" class="view-section">
+                <header class="content-header">
+                    <div class="header-info">
+                        <div class="avatar">📊</div>
+                        <div>
+                            <h1>Catálogo de Proyectos de Equigrup</h1>
+                            <p>Historial técnico sincronizado (<span id="contadorProyectos">0</span> proyectos registrados)</p>
+                        </div>
+                    </div>
+                    <button class="btn-secondary" onclick="cargarProyectos()">
+                        🔄 Actualizar
+                    </button>
+                </header>
+
+                <div class="filters-container">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input 
+                            type="text" 
+                            id="searchProyectosInput" 
+                            placeholder="Buscar por nombre, cliente (Ecopetrol, Arcelor), máquina o ciudad..." 
+                            oninput="filtrarProyectos()"
+                        >
+                    </div>
+                    <div class="dropdowns-wrapper">
+                        <select id="filterEstado" onchange="filtrarProyectos()">
+                            <option value="">⚡ Todos los Estados</option>
+                            <option value="Completado">✅ Completados</option>
+                            <option value="En ejecución">⏳ En ejecución</option>
+                            <option value="Planificado">📋 Planificados</option>
+                        </select>
+                        <select id="filterCategoria" onchange="filtrarProyectos()">
+                            <option value="">📁 Todas las Categorías</option>
+                            <option value="Informe Técnico">📄 Informes Técnicos</option>
+                            <option value="Instalación">🏗️ Instalación</option>
+                            <option value="Mantenimiento">🔧 Mantenimiento</option>
+                            <option value="Cimentación">🔩 Cimentación</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="projects-grid" id="projectsGrid">
+                    <div class="loading-spinner">Cargando proyectos desde la base de datos...</div>
+                </div>
+            </section>
+
+            <!-- 3. VISTA: AGREGAR PROYECTO (ESTÉTICA PULIDA) -->
+            <section id="vistaAgregar" class="view-section">
+                <header class="content-header">
+                    <div class="header-info">
+                        <div class="avatar">➕</div>
+                        <div>
+                            <h1>Registrar Nuevo Proyecto</h1>
+                            <p>Ingresa la información técnica para guardarla en la Base de Datos</p>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="form-container">
+                    <form id="formProyecto" onsubmit="guardarProyecto(event)" class="equi-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="projTitulo">Título del Proyecto *</label>
+                                <input type="text" id="projTitulo" placeholder="Ej: Montaje de Compresores en Planta Reficar" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="projCliente">Cliente / Empresa</label>
+                                <input type="text" id="projCliente" placeholder="Ej: Ecopetrol / Reficar / Cenit">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="projUbicacion">Ubicación / Ciudad</label>
+                                <input type="text" id="projUbicacion" placeholder="Ej: Cartagena, Colombia">
+                            </div>
+                            <div class="form-group">
+                                <label for="projCategoria">Categoría</label>
+                                <select id="projCategoria">
+                                    <option value="Instalación">Instalación y Montaje</option>
+                                    <option value="Mantenimiento">Mantenimiento Predictivo / Correctivo</option>
+                                    <option value="Cimentación">Cimentación y Pernos de Anclaje</option>
+                                    <option value="Informe Técnico">Informe Técnico</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="projMaquinaria">Maquinaria Involucrada</label>
+                                <input type="text" id="projMaquinaria" placeholder="Ej: Compresor Atlas, Bomba Booster, Motor Waukesha">
+                            </div>
+                            <div class="form-group">
+                                <label for="projEstado">Estado del Proyecto</label>
+                                <select id="projEstado">
+                                    <option value="En ejecución">En ejecución</option>
+                                    <option value="Completado">Completado</option>
+                                    <option value="Planificado">Planificado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="projDescripcion">Descripción Técnica y Trabajos</label>
+                            <textarea id="projDescripcion" rows="4" placeholder="Detalles de la obra, pernos usados, nivelación, etc."></textarea>
+                        </div>
+
+                        <!-- ZONA MODERNA DE SUBIDA DE FOTO -->
+                        <div class="form-group">
+                            <label>Fotografía Principal (Opcional)</label>
+                            <div class="dropzone-box" onclick="document.getElementById('projFoto').click()">
+                                <input type="file" id="projFoto" accept="image/*" style="display: none;" onchange="mostrarNombreArchivo('projFoto', 'lblProjFoto')">
+                                <span class="dropzone-icon">🖼️</span>
+                                <span class="dropzone-text">Haz clic aquí para seleccionar una imagen</span>
+                                <span class="dropzone-hint">Formatos: JPG, PNG, WEBP</span>
+                                <span id="lblProjFoto" class="dropzone-filename"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="margin-top: 14px;">
+                            <button type="submit" class="btn-primary-action" id="btnGuardarProyecto">
+                                <span>💾</span> Guardar Proyecto
+                            </button>
+                            <span id="msgProyectoEstado" class="status-msg"></span>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 4. VISTA: SUBIR MULTIMEDIA (ESTÉTICA PULIDA) -->
+            <section id="vistaMultimedia" class="view-section">
+                <header class="content-header">
+                    <div class="header-info">
+                        <div class="avatar">📁</div>
+                        <div>
+                            <h1>Gestión Multimedia y Evidencias</h1>
+                            <p>Sube fotografías, planos o evidencias técnicas asociadas a proyectos</p>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="form-container">
+                    <form id="formMedia" onsubmit="subirMultimedia(event)" class="equi-form">
+                        <div class="form-group">
+                            <label for="mediaProyectoSelect">Asociar a Proyecto</label>
+                            <select id="mediaProyectoSelect">
+                                <option value="">-- Sin asociar / Galería General --</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mediaTitulo">Título de la Foto o Archivo</label>
+                            <input type="text" id="mediaTitulo" placeholder="Ej: Foto de nivelación de bomba booster" required>
+                        </div>
+
+                        <!-- ZONA MODERNA DE SUBIDA DE ARCHIVO -->
+                        <div class="form-group">
+                            <label>Seleccionar Archivo (Imagen o PDF) *</label>
+                            <div class="dropzone-box" onclick="document.getElementById('mediaArchivo').click()">
+                                <input type="file" id="mediaArchivo" style="display: none;" required onchange="mostrarNombreArchivo('mediaArchivo', 'lblMediaArchivo')">
+                                <span class="dropzone-icon">📁</span>
+                                <span class="dropzone-text">Haz clic aquí para seleccionar el archivo</span>
+                                <span class="dropzone-hint">Formatos soportados: Imágenes (JPG, PNG) o Documentos PDF</span>
+                                <span id="lblMediaArchivo" class="dropzone-filename"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="margin-top: 14px;">
+                            <button type="submit" class="btn-primary-action" id="btnSubirMedia">
+                                <span>📤</span> Subir Archivo
+                            </button>
+                            <span id="msgMediaEstado" class="status-msg"></span>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 5. VISTA: BLOG & BANNER WEB -->
+            <section id="vistaBlog" class="view-section">
+                <header class="content-header">
+                    <div class="header-info">
+                        <div class="avatar" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8;">🌐</div>
+                        <div>
+                            <h1>Blog & Banner Web | Publicador de Obras y Noticias</h1>
+                            <p>Sube y gestiona las publicaciones de obras, artículos técnicos, fotos y videos para el banner principal del portal.</p>
+                        </div>
+                    </div>
+                    <div class="header-actions" style="display: flex; gap: 8px;">
+                        <button id="tabBtnBlogPublicar" class="btn-act active" style="background: #2563eb; color: #fff; border-color: #3b82f6; padding: 8px 16px;" onclick="cambiarPestanaBlog('publicar')">
+                            ➕ Publicar al Banner / Blog
+                        </button>
+                        <button id="tabBtnBlogFeed" class="btn-act" style="padding: 8px 16px;" onclick="cambiarPestanaBlog('feed')">
+                            👁️ Ver Banner & Feed (<span id="blogCountBadge">0</span>)
+                        </button>
+                    </div>
+                </header>
+
+                <!-- SUB-PESTAÑA 1: FORMULARIO DE PUBLICACIÓN -->
+                <div id="seccionBlogPublicar" class="form-container" style="max-width: 860px; margin: 0 auto;">
+                    <div class="form-card">
+                        
+                        <!-- AUTOCOMPLETAR DESDE PROYECTO EXISTENTE -->
+                        <div style="background: rgba(30, 41, 59, 0.85); border: 1px solid #3b82f6; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                                <label for="blogProyectoSelect" style="font-weight: 700; color: #38bdf8; font-size: 13.5px; margin: 0;">
+                                    ⚡ Cargar y Vincular Proyecto Registrado (Autocompletar):
+                                </label>
+                                <span style="font-size: 11.5px; color: #94a3b8;">Opcional: rellena el título y detalles automáticamente</span>
+                            </div>
+                            <select id="blogProyectoSelect" onchange="autocompletarDesdeProyecto()" style="width: 100%; padding: 10px; border-radius: 8px; background: #0f172a; color: #f8fafc; border: 1px solid #475569;">
+                                <option value="">-- Redactar publicación libre (Sin vincular a proyecto) --</option>
+                            </select>
+                        </div>
+
+                        <form id="formPublicarBlog" onsubmit="guardarPublicacionBlog(event)">
+                            <div class="form-group">
+                                <label for="blogTitulo">Título del Proyecto o Titular de la Noticia *</label>
+                                <input type="text" id="blogTitulo" placeholder="Ej: Montaje y Alineación Láser de Compresor en Planta Reficar" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="blogResumen">Resumen Corto para el Banner (Subtítulo)</label>
+                                    <input type="text" id="blogResumen" placeholder="Ej: Trabajo de alta precisión ejecutado bajo estándares internacionales API 686.">
+                                </div>
+                                <div class="form-group">
+                                    <label for="blogCategoria">Categoría del Blog</label>
+                                    <select id="blogCategoria">
+                                        <option value="Obras y Proyectos Destacados">Obras y Proyectos Destacados</option>
+                                        <option value="Instalación & Montaje">Instalación & Montaje</option>
+                                        <option value="Normas API & Grout">Normas API & Grout</option>
+                                        <option value="Mantenimiento Industrial">Mantenimiento Industrial</option>
+                                        <option value="Casos de Éxito">Casos de Éxito</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="blogContenido">Descripción Completa / Contenido del Artículo *</label>
+                                <textarea id="blogContenido" rows="6" placeholder="Describe los detalles de la obra, metodología aplicada, equipos utilizados, logros y valor técnico agregado por Equigrup..." required></textarea>
+                            </div>
+
+                            <div class="form-row" style="align-items: center; background: rgba(15, 23, 42, 0.6); padding: 12px 16px; border-radius: 8px; border: 1px solid #334155;">
+                                <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center; gap: 10px;">
+                                    <input type="checkbox" id="blogEsBanner" checked style="width: 18px; height: 18px; cursor: pointer; accent-color: #38bdf8;">
+                                    <label for="blogEsBanner" style="cursor: pointer; margin: 0; font-weight: 600; color: #f1f5f9;">
+                                        ⭐ Destacar en el Banner Principal de la Web (Hero)
+                                    </label>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label for="blogAutor" style="font-size: 11px; margin-bottom: 2px;">Publicado por:</label>
+                                    <input type="text" id="blogAutor" value="Equigrup Operaciones" style="padding: 6px 10px; font-size: 12px;">
+                                </div>
+                            </div>
+
+                            <!-- ZONA DE CARGA DE FOTO O VIDEO -->
+                            <div class="form-group" style="margin-top: 16px;">
+                                <label style="font-weight: 600;">Multimedia Principal (Foto o Video para el Banner)</label>
+                                <div class="file-dropzone" id="blogDropzone" onclick="document.getElementById('blogArchivoInput').click()" style="border: 2px dashed #38bdf8; background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s;">
+                                    <input type="file" id="blogArchivoInput" accept="image/*,video/mp4,video/webm,video/quicktime" style="display: none;" onchange="previsualizarMultimediaBlog(this)">
+                                    <div class="dropzone-content" id="blogDropzoneContent">
+                                        <div class="icon" style="font-size: 34px; margin-bottom: 6px;">🎬📸</div>
+                                        <p style="font-size: 14px; font-weight: 600; color: #f8fafc; margin: 0 0 4px 0;">Haz clic o arrastra una <strong>Foto (JPG, PNG, WEBP)</strong> o un <strong>Video (MP4, WEBM, MOV)</strong></p>
+                                        <span class="hint" style="color: #94a3b8; font-size: 12px;">Tamaño recomendado para banner: 1920x1080 o video HD en bucle.</span>
+                                    </div>
+                                    <!-- CONTENEDOR DE PREVIEW EN VIVO -->
+                                    <div id="blogMediaPreview" style="display: none; margin-top: 12px;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions" style="margin-top: 20px; display: flex; gap: 12px; align-items: center;">
+                                <button type="submit" id="btnSubmitBlog" class="btn-primary-action" style="min-width: 200px; padding: 12px 24px; font-size: 14px;">
+                                    <span>🚀</span> Publicar en Banner / Blog
+                                </button>
+                                <button type="button" class="btn-secondary" onclick="limpiarFormularioBlog()">
+                                    🧹 Limpiar
+                                </button>
+                                <span id="msgBlogEstado" class="status-msg"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- SUB-PESTAÑA 2: VISTA DEL BANNER Y FEED DE PUBLICACIONES -->
+                <div id="seccionBlogFeed" style="display: none; padding: 0 20px 40px 20px;">
+                    
+                    <!-- 1. LIVE HERO BANNER PREVIEW -->
+                    <div style="margin-bottom: 28px;">
+                        <h2 style="font-size: 16px; color: #38bdf8; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <span>🌟</span> Vista Previa del Banner Principal (Página Web):
+                        </h2>
+                        <div id="heroBannerShowcase" class="hero-banner-showcase">
+                            <!-- Se renderiza dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- 2. GRID DE TODAS LAS PUBLICACIONES DEL BLOG -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                            <h2 style="font-size: 16px; color: #f8fafc; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                <span>📰</span> Todas las Publicaciones y Artículos del Blog:
+                            </h2>
+                            <button class="btn-secondary" onclick="cargarPublicacionesBlog()" style="padding: 6px 12px; font-size: 12px;">
+                                🔄 Actualizar Lista
+                            </button>
+                        </div>
+                        <div id="blogGrid" class="blog-grid">
+                            <!-- Se renderizan las tarjetas aquí -->
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 6. VISTA: ARQUITECTURA DE MICROSERVICIOS (MS-1: INGENIERÍA & MS-2: AUDITORÍA) -->
+            <section id="vistaMicroservicios" class="view-section">
+                <header class="content-header">
+                    <div class="header-info">
+                        <div class="avatar" style="background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981;">⚙️</div>
+                        <div>
+                            <h1>Ecosistema de Microservicios | Orquestación Nativa ASGI (Python / FastAPI)</h1>
+                            <p>Enrutamiento vía API Gateway ASGI + Procesos Uvicorn Independientes (Sin Docker) — MS-1: Cálculos API 686 | MS-2: Auditoría & Telemetría</p>
+                        </div>
+                    </div>
+                    <div class="header-actions" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <a href="/ms/ingenieria/docs" target="_blank" class="btn-act" style="text-decoration: none; padding: 8px 14px; background: #0f172a; border: 1px solid #10b981; color: #34d399;">
+                            📘 Swagger MS-1 (:8001) ↗
+                        </a>
+                        <a href="/ms/auditoria/docs" target="_blank" class="btn-act" style="text-decoration: none; padding: 8px 14px; background: #0f172a; border: 1px solid #38bdf8; color: #38bdf8;">
+                            📘 Swagger MS-2 (:8002) ↗
+                        </a>
+                        <a href="/monitoreo" target="_blank" class="btn-act" style="text-decoration: none; padding: 8px 14px; background: #ff6c37; border: 1px solid #ff6c37; color: #fff; font-weight: 700;">
+                            📡 Monitor Postman en Vivo ↗
+                        </a>
+                    </div>
+                </header>
+
+                <div style="padding: 20px; overflow-y: auto; max-height: calc(100vh - 105px);">
+                    <!-- TARJETAS DE TOPOLOGÍA DE LOS 3 SERVICIOS -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px;">
+                        <div style="background: #1e293b; border: 1px solid #334155; border-left: 4px solid #3b82f6; border-radius: 10px; padding: 14px 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: #60a5fa; font-size: 13px;">🌐 API GATEWAY & CORE RAG</strong>
+                                <span style="background: #065f46; color: #34d399; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 700;">● ONLINE (:8000)</span>
+                            </div>
+                            <p style="font-size: 12px; color: #94a3b8; margin: 6px 0 0 0;">Enrutador central, Agente IA Equi (LLM + RAG SQLite) y Gestión de 52 Proyectos.</p>
+                        </div>
+
+                        <div style="background: #1e293b; border: 1px solid #334155; border-left: 4px solid #10b981; border-radius: 10px; padding: 14px 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: #34d399; font-size: 13px;">⚙️ MICROSERVICIO 1: ms-ingenieria</strong>
+                                <span style="background: #065f46; color: #34d399; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 700;">● ONLINE (:8001)</span>
+                            </div>
+                            <p style="font-size: 12px; color: #94a3b8; margin: 6px 0 0 0;">Motor matemático de Grouting Epóxico (Chockfast Red) y Tolerancias API RP 686 / ISO 10816.</p>
+                        </div>
+
+                        <div style="background: #1e293b; border: 1px solid #334155; border-left: 4px solid #f59e0b; border-radius: 10px; padding: 14px 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: #fbbf24; font-size: 13px;">🛡️ MICROSERVICIO 2: ms-auditoria</strong>
+                                <span style="background: #065f46; color: #34d399; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 700;">● ONLINE (:8002)</span>
+                            </div>
+                            <p style="font-size: 12px; color: #94a3b8; margin: 6px 0 0 0;">Trazabilidad inmutable y telemetría con patrón <code>Database-per-Service</code> (<code>ms_auditoria.db</code>).</p>
+                        </div>
+                    </div>
+
+                    <!-- INTERFAZ INTERACTIVA DEL MICROSERVICIO 1 (ms-ingenieria) -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 18px; margin-bottom: 22px;">
+                        <!-- CALCULADORA 1: GROUTING EPÓXICO -->
+                        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 18px;">
+                            <h3 style="margin: 0 0 6px 0; color: #f8fafc; font-size: 15px;">🧪 MS-1: Calculadora de Dosificación de Grout (API RP 686 Cap. 5)</h3>
+                            <p style="font-size: 12px; color: #94a3b8; margin: 0 0 14px 0;">Endpoint: <code>POST /ms/ingenieria/calcular-grout</code></p>
+                            <form onsubmit="ejecutarCalculoGroutMS1(event)">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Largo del Skid (m)</label>
+                                        <input type="number" step="0.01" id="msGroutLargo" value="2.40" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ancho del Skid (m)</label>
+                                        <input type="number" step="0.01" id="msGroutAncho" value="1.10" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Espesor de Capa (mm)</label>
+                                        <input type="number" step="1" id="msGroutEspesor" value="50" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Temperatura Ambiente (°C)</label>
+                                        <input type="number" step="0.5" id="msGroutTemp" value="24.0" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary-action" style="width: 100%; margin-top: 6px; padding: 10px;">
+                                    ⚡ Invocar Microservicio 1 (Calcular Grout)
+                                </button>
+                            </form>
+                            <div id="resMsGrout" style="margin-top: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; font-size: 12.5px; display: none;"></div>
+                        </div>
+
+                        <!-- CALCULADORA 2: ALINEACIÓN LÁSER Y VIBRACIÓN -->
+                        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 18px;">
+                            <h3 style="margin: 0 0 6px 0; color: #f8fafc; font-size: 15px;">🔬 MS-1: Evaluador de Alineación Láser & Vibración (API 686 & ISO 10816)</h3>
+                            <p style="font-size: 12px; color: #94a3b8; margin: 0 0 14px 0;">Endpoint: <code>POST /ms/ingenieria/evaluar-alineacion</code></p>
+                            <form onsubmit="ejecutarEvaluacionAlineacionMS1(event)">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Equipo Rotativo</label>
+                                        <input type="text" id="msAlinEquipo" value="Compresor Ariel JGK/4" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Velocidad (RPM)</label>
+                                        <input type="number" id="msAlinRpm" value="1800" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Offset Paralelo (mils)</label>
+                                        <input type="number" step="0.1" id="msAlinParalelo" value="1.4" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Vibración (mm/s RMS)</label>
+                                        <input type="number" step="0.1" id="msAlinVibracion" value="1.9" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary-action" style="width: 100%; margin-top: 6px; padding: 10px; background: #059669; border-color: #10b981;">
+                                    🔬 Invocar Microservicio 1 (Evaluar Norma API 686)
+                                </button>
+                            </form>
+                            <div id="resMsAlineacion" style="margin-top: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; font-size: 12.5px; display: none;"></div>
+                        </div>
+                    </div>
+
+                    <!-- PANEL EN VIVO DEL MICROSERVICIO 2 (ms-auditoria) -->
+                    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 18px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                            <div>
+                                <h3 style="margin: 0; color: #f8fafc; font-size: 15.5px;">🛡️ MS-2: Bitácora Inmutable de Auditoría y Telemetría en Tiempo Real</h3>
+                                <p style="font-size: 12px; color: #94a3b8; margin: 4px 0 0 0;">Endpoints: <code>GET /ms/auditoria/bitacora</code> | <code>GET /ms/auditoria/metricas</code> — Base de datos propia: <code>ms_auditoria.db</code></p>
+                            </div>
+                            <button class="btn-secondary" onclick="cargarDatosMicroservicioAuditoria()" style="padding: 7px 14px; font-size: 12.5px;">
+                                🔄 Refrescar Bitácora MS-2
+                            </button>
+                        </div>
+
+                        <div id="msAuditoriaMetricasBox" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 14px;"></div>
+
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: left;">
+                                <thead>
+                                    <tr style="background: #0f172a; color: #94a3b8; border-bottom: 1px solid #334155;">
+                                        <th style="padding: 10px;">ID</th>
+                                        <th style="padding: 10px;">Fecha / Hora</th>
+                                        <th style="padding: 10px;">Servicio Origen</th>
+                                        <th style="padding: 10px;">Categoría</th>
+                                        <th style="padding: 10px;">Usuario</th>
+                                        <th style="padding: 10px;">Acción Auditada</th>
+                                        <th style="padding: 10px;">Latencia</th>
+                                        <th style="padding: 10px;">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="msAuditoriaTablaBody">
+                                    <tr><td colspan="8" style="padding: 16px; text-align: center; color: #94a3b8;">Cargando eventos del Microservicio 2...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL PARA EDITAR PROYECTO -->
+    <div id="modalEditar" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>✏️ Modificar Información del Proyecto</h2>
+                <button class="btn-close" onclick="cerrarModalEditar()">&times;</button>
+            </div>
+            <form id="formEditarProyecto" onsubmit="guardarEdicionProyecto(event)">
+                <input type="hidden" id="editProjId">
+                <div class="form-group">
+                    <label for="editProjTitulo">Título del Proyecto</label>
+                    <input type="text" id="editProjTitulo" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editProjCliente">Cliente / Empresa</label>
+                        <input type="text" id="editProjCliente" placeholder="Ej: ArcelorMittal, Ecopetrol">
+                    </div>
+                    <div class="form-group">
+                        <label for="editProjUbicacion">Ubicación / Ciudad</label>
+                        <input type="text" id="editProjUbicacion" placeholder="Ej: Turbo, Antioquia / Cartagena">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editProjCategoria">Categoría</label>
+                        <select id="editProjCategoria">
+                            <option value="Informe Técnico">Informe Técnico</option>
+                            <option value="Instalación">Instalación y Montaje</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                            <option value="Cimentación">Cimentación y Pernos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editProjEstado">Estado</label>
+                        <select id="editProjEstado">
+                            <option value="En ejecución">En ejecución</option>
+                            <option value="Completado">Completado</option>
+                            <option value="Planificado">Planificado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editProjMaquinaria">Maquinaria / Equipos</label>
+                    <input type="text" id="editProjMaquinaria" placeholder="Ej: Pernos de Anclaje, Motor Waukesha">
+                </div>
+                <div class="form-group">
+                    <label for="editProjDescripcion">Descripción Técnica</label>
+                    <textarea id="editProjDescripcion" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="cerrarModalEditar()">Cancelar</button>
+                    <button type="submit" class="btn-primary-action" style="min-width: 140px; padding: 10px 20px;">💾 Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PARA EDITAR PUBLICACIÓN DE BLOG -->
+    <div id="modalEditarBlog" class="modal-overlay" style="display: none;">
+        <div class="modal-card" style="max-width: 620px;">
+            <div class="modal-header">
+                <h2>✏️ Editar Publicación del Blog / Banner</h2>
+                <button class="btn-close" onclick="cerrarModalEditarBlog()">&times;</button>
+            </div>
+            <form id="formEditarBlog" onsubmit="guardarEdicionBlog(event)">
+                <input type="hidden" id="editBlogId">
+                <div class="form-group">
+                    <label for="editBlogTitulo">Título del Proyecto o Noticia *</label>
+                    <input type="text" id="editBlogTitulo" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editBlogResumen">Resumen para el Banner</label>
+                        <input type="text" id="editBlogResumen">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBlogCategoria">Categoría</label>
+                        <select id="editBlogCategoria">
+                            <option value="Obras y Proyectos Destacados">Obras y Proyectos Destacados</option>
+                            <option value="Instalación & Montaje">Instalación & Montaje</option>
+                            <option value="Normas API & Grout">Normas API & Grout</option>
+                            <option value="Mantenimiento Industrial">Mantenimiento Industrial</option>
+                            <option value="Casos de Éxito">Casos de Éxito</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editBlogContenido">Contenido Completo *</label>
+                    <textarea id="editBlogContenido" rows="5" required></textarea>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px; background: #0f172a; padding: 10px; border-radius: 8px;">
+                    <input type="checkbox" id="editBlogEsBanner" style="width: 18px; height: 18px; cursor: pointer; accent-color: #38bdf8;">
+                    <label for="editBlogEsBanner" style="cursor: pointer; margin: 0; font-weight: 600; color: #f1f5f9;">
+                        ⭐ Destacar en el Banner Principal de la Web
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="cerrarModalEditarBlog()">Cancelar</button>
+                    <button type="submit" class="btn-primary-action" style="min-width: 140px; padding: 10px 20px;">💾 Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ARQUITECTURA MVVM (Model - View - ViewModel) -->
+    <!-- 1. MODELOS (M): Servicios de datos y contratos REST -->
+    <script src="/static/js/models/AuthModel.js?v=19.0"></script>
+    <script src="/static/js/models/ProjectModel.js?v=19.0"></script>
+    <script src="/static/js/models/ChatModel.js?v=19.0"></script>
+    <script src="/static/js/models/BlogModel.js?v=19.0"></script>
+
+    <!-- 2. VIEWMODELS (VM): Estado reactivo, comandos y lógica de presentación -->
+    <script src="/static/js/viewmodels/AuthViewModel.js?v=19.0"></script>
+    <script src="/static/js/viewmodels/ProjectsViewModel.js?v=19.0"></script>
+    <script src="/static/js/viewmodels/ChatViewModel.js?v=19.0"></script>
+    <script src="/static/js/viewmodels/BlogViewModel.js?v=19.0"></script>
+
+    <!-- 3. VISTAS (V): Enlace con el DOM y renderizado -->
+    <script src="/static/js/views/AppView.js?v=19.0"></script>
+
+    <!-- 4. BOOTSTRAPPER & EVENT BINDINGS -->
+    <script src="/static/app.js?v=19.0"></script>
+    <script>
+        // Garantizar activación de vista Microservicios incluso ante caché de navegador
+        const _origCambiarVista = window.cambiarVista;
+        window.cambiarVista = function(vista) {
+            if (typeof _origCambiarVista === 'function') {
+                _origCambiarVista(vista);
+            }
+            if (vista === 'microservicios') {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+                const btn = document.getElementById('navMicroservicios');
+                const sec = document.getElementById('vistaMicroservicios');
+                if (btn) btn.classList.add('active');
+                if (sec) sec.classList.add('active');
+                if (typeof cargarDatosMicroservicioAuditoria === 'function') {
+                    cargarDatosMicroservicioAuditoria();
+                }
+            }
+        };
+    </script>
+</body>
+</html>

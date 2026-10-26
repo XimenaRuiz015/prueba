@@ -1,0 +1,396 @@
+{
+  "info": {
+    "_postman_id": "equigrup-qa-monitoring-collection-2026",
+    "name": "Equigrup - Suite de Pruebas y Monitoreo (Producción Cloud)",
+    "description": "Colección oficial de Postman para pruebas funcionales, integración, base de datos, seguridad y monitoreo en tiempo real del Asistente Inteligente Equi (Equigrup).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://agente-equigrup.onrender.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Monitoreo de Disponibilidad - Web SPA (Health Check)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK (Servidor en línea)', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Interfaz MVVM cargada correctamente', function () {",
+              "    pm.expect(pm.response.text()).to.include('Equigrup');",
+              "});",
+              "pm.test('Tiempo de respuesta aceptable (< 10000ms)', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(10000);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "2. Base de Datos - Consultar Catálogo de 52 Proyectos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Retorna arreglo JSON de proyectos', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.be.at.least(50);",
+              "});",
+              "pm.test('Proyectos contienen estructura completa (id, titulo, estado)', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0]).to.have.property('id');",
+              "    pm.expect(jsonData[0]).to.have.property('titulo');",
+              "    pm.expect(jsonData[0]).to.have.property('estado');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/proyectos",
+          "host": ["{{base_url}}"],
+          "path": ["api", "proyectos"]
+        }
+      }
+    },
+    {
+      "name": "3. Seguridad - Rechazo de Credenciales Inválidas (401)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Bloquea acceso no autorizado con código 401', function () {",
+              "    pm.response.to.have.status(401);",
+              "});",
+              "pm.test('Retorna mensaje de error de seguridad', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.detail).to.include('Credenciales incorrectas');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"usuario_intruso\",\n  \"password\": \"clave_falsa_123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": ["{{base_url}}"],
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "4. Integración Documental - Apertura Manual PDF (API 686)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Cabecera Content-Type es application/pdf', function () {",
+              "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/documentos/1.%20API%20686-2009.pdf",
+          "host": ["{{base_url}}"],
+          "path": ["api", "documentos", "1.%20API%20686-2009.pdf"]
+        }
+      }
+    },
+    {
+      "name": "5. Monitoreo IA + BD - Proyectos en Ejecución",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Asistente Equi responde con datos reales de Ecopetrol (#51)', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.asistente).to.eql('Equi');",
+              "    pm.expect(jsonData.respuesta).to.include('51');",
+              "    pm.expect(jsonData.fuentes_consultadas.length).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mensaje\": \"¿Cuáles proyectos están en ejecución?\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/chat",
+          "host": ["{{base_url}}"],
+          "path": ["chat"]
+        }
+      }
+    },
+    {
+      "name": "6. Monitoreo IA + RAG - Procedimiento Grout Chockfast Red",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Respuesta incluye protocolo técnico y cita fuentes documentales', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.respuesta.length).to.be.above(100);",
+              "    pm.expect(jsonData.fuentes_consultadas).to.be.an('array').that.is.not.empty;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mensaje\": \"¿Cómo se prepara el grout Chockfast Red y cuál es su tiempo de curado?\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/chat",
+          "host": ["{{base_url}}"],
+          "path": ["chat"]
+        }
+      }
+    },
+    {
+      "name": "7. Monitoreo IA + RAG - Norma Internacional API 686",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Explica lineamientos API 686 y adjunta fuentes', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.respuesta).to.include('686');",
+              "    pm.expect(jsonData.fuentes_consultadas.length).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mensaje\": \"¿Qué dice la norma API 686 sobre alineación de ejes?\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/chat",
+          "host": ["{{base_url}}"],
+          "path": ["chat"]
+        }
+      }
+    },
+    {
+      "name": "8. Monitoreo Blog y Banner Web",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Retorna lista de publicaciones del banner', function () {",
+              "    pm.expect(pm.response.json()).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/blog",
+          "host": ["{{base_url}}"],
+          "path": ["api", "blog"]
+        }
+      }
+    },
+    {
+      "name": "9. Microservicio 1 (ms-ingenieria) - Cálculo Grout Epóxico API 686",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK en Microservicio 1', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Calcula kits comerciales de Chockfast Red y curva térmica', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.microservicio).to.eql('ms-ingenieria');",
+              "    pm.expect(jsonData.resultados_calculo.kits_comerciales_requeridos).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"largo_m\": 2.4,\n  \"ancho_m\": 1.1,\n  \"espesor_mm\": 50.0,\n  \"temperatura_ambiente_c\": 24.0,\n  \"producto\": \"Chockfast Red\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/ms/ingenieria/calcular-grout",
+          "host": ["{{base_url}}"],
+          "path": ["ms", "ingenieria", "calcular-grout"]
+        }
+      }
+    },
+    {
+      "name": "10. Microservicio 2 (ms-auditoria) - Telemetría y Bitácora Database-per-Service",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK en Microservicio 2', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Retorna métricas de auditoría y estado 100% Operativo', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.microservicio).to.eql('ms-auditoria');",
+              "    pm.expect(jsonData.resumen.total_eventos_auditados).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/ms/auditoria/metricas",
+          "host": ["{{base_url}}"],
+          "path": ["ms", "auditoria", "metricas"]
+        }
+      }
+    },
+    {
+      "name": "11. Fase Liberación y Operación - Verificación SemVer v2.0.0 y Render Cloud",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Estado HTTP es 200 OK en Endpoint Operativo', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Valida Versión SemVer v2.0.0 liberada y 3 servicios activos', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.fase_liberacion.version_actual_semver).to.eql('v2.0.0');",
+              "    pm.expect(jsonData.servicios_activos.api_gateway_principal.estado).to.eql('OPERATIVO');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/operacion/status",
+          "host": ["{{base_url}}"],
+          "path": ["api", "operacion", "status"]
+        }
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equigrup S.A.S. — Entregable 5: Mockups de Alta Fidelidad (UI Definitivo)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        equi: {
+                            navy: '#0F172A',
+                            steel: '#1E3A8A',
+                            orange: '#F97316',
+                            amber: '#EA580C',
+                            light: '#F8FAFC',
+                            emerald: '#10B981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .mockup-view { display: none; animation: fadeUp 0.3s ease; }
+        .mockup-view.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .industrial-grid-bg {
+            background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-slate-200/70 text-[#0F172A] font-sans antialiased min-h-screen pb-12">
+
+    <!-- BARRA DE CONTROL SUPERIOR DEL VISOR DE MOCKUPS -->
+    <header class="sticky top-0 z-50 bg-[#0F172A]/95 backdrop-blur-xl border-b border-slate-800 px-6 py-3.5 shadow-2xl">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F97316] to-[#EA580C] flex items-center justify-center text-white font-black shadow-lg shadow-orange-500/30">
+                    EQ
+                </div>
+                <div>
+                    <div class="text-white font-extrabold text-sm tracking-wide flex items-center gap-2">
+                        <span>EQUIGRUP S.A.S. — HIGH-FIDELITY UI MOCKUPS</span>
+                        <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-mono text-[11px] px-2.5 py-0.5 rounded-full">DESIGN SYSTEM v2.0</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-400 text-[11px] font-mono mt-0.5">
+                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#0F172A] border border-slate-500"></span> #0F172A
+                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#1E3A8A]"></span> #1E3A8A
+                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#F97316]"></span> #F97316
+                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#10B981]"></span> #10B981
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex flex-wrap gap-2">
+                <button onclick="switchMockup('mk1', this)" class="mk-btn bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-orange-500/25 transition">
+                    🏢 1. Landing Corporativa
+                </button>
+                <button onclick="switchMockup('mk2', this)" class="mk-btn bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl border border-slate-700 transition">
+                    📊 2. Explorador Dataset (248)
+                </button>
+                <button onclick="switchMockup('mk3', this)" class="mk-btn bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl border border-slate-700 transition">
+                    🤖 3. Consola Chatbot RAG
+                </button>
+                <button onclick="switchMockup('mk4', this)" class="mk-btn bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl border border-slate-700 transition">
+                    🛡️ 4. Panel Admin & Auditoría RAG
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MARCO SIMULADO DE NAVEGADOR DE ALTA FIDELIDAD -->
+    <div class="max-w-7xl mx-auto mt-6 px-4">
+        <div class="bg-[#F8FAFC] rounded-3xl shadow-2xl border border-slate-300 overflow-hidden">
+            <!-- CHROME BAR -->
+            <div class="bg-slate-900 px-5 py-3 flex items-center justify-between border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 text-slate-300 font-mono text-xs px-4 py-1.5 rounded-lg flex items-center gap-2 w-1/2 justify-center">
+                    <span class="text-emerald-400">🔒 https://</span>agente-equigrup.onrender.com
+                </div>
+                <div class="text-[11px] font-mono text-slate-400">1440px • Desktop HD</div>
+            </div>
+
+            <!-- =======================================================================
+                 MOCKUP 1: LANDING PAGE CORPORATIVA AUTOGESTIONABLE
+                 ======================================================================= -->
+            <main id="mk1" class="mockup-view active relative">
+                <!-- NAVBAR INSTITUCIONAL -->
+                <div class="bg-white/95 backdrop-blur border-b border-slate-200 px-8 py-4 flex flex-wrap justify-between items-center">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-2xl bg-[#0F172A] text-[#F97316] flex items-center justify-center font-black text-xl border-2 border-[#F97316] shadow">
+                            ⚙️
+                        </div>
+                        <div>
+                            <span class="font-black text-lg tracking-tight text-[#0F172A]">EQUIGRUP S.A.S.</span>
+                            <span class="block text-xs text-slate-500 font-medium">Ingeniería Mecánica, Grouting Epóxico & Confiabilidad Rotativa</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6 text-xs font-bold text-slate-700">
+                        <span class="text-[#F97316] border-b-2 border-[#F97316] pb-1 cursor-pointer">Inicio & Banner</span>
+                        <span onclick="switchMockup('mk2', document.querySelectorAll('.mk-btn')[1])" class="hover:text-[#F97316] cursor-pointer">Catálogo 52 Proyectos</span>
+                        <span onclick="switchMockup('mk3', document.querySelectorAll('.mk-btn')[2])" class="hover:text-[#F97316] cursor-pointer">Asistente IA Equi (RAG)</span>
+                        <button onclick="switchMockup('mk4', document.querySelectorAll('.mk-btn')[3])" class="bg-[#0F172A] hover:bg-[#1E3A8A] text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-md transition">
+                            <span>🔐</span> Intranet / Admin CMS
+                        </button>
+                    </div>
+                </div>
+
+                <!-- HERO SECTION INDUSTRIAL CON TELEMETRÍA REAL -->
+                <section class="relative bg-gradient-to-br from-[#0F172A] via-[#1E3A8A] to-[#0F172A] industrial-grid-bg text-white py-14 px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                        <div class="lg:col-span-7 space-y-5">
+                            <div class="inline-flex items-center gap-2 bg-[#F97316]/20 border border-[#F97316]/50 text-[#F97316] px-3.5 py-1.5 rounded-full text-xs font-mono font-bold">
+                                <span>⭐ OBRA DESTACADA EN BANNER CMS</span>
+                                <span>•</span>
+                                <span>ESTÁNDAR API RP 686 & ISO 10816-3</span>
+                            </div>
+                            <h1 class="text-3xl lg:text-5xl font-black leading-tight tracking-tight">
+                                Ingeniería de Precisión en <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-amber-300">Grout Chockfast Red</span> y Alineación Láser.
+                            </h1>
+                            <p class="text-slate-300 text-sm lg:text-base leading-relaxed max-w-2xl">
+                                Ejecución certificada de cimentación monolítica, perforación y torqueo de pernos de anclaje (<code class="font-mono text-amber-300">PAC-EG-073</code>) y montaje de maquinaria crítica para <strong>Ecopetrol, Cenit, ArcelorMittal, SierraCol Energy y Reficar</strong>.
+                            </p>
+                            <div class="flex flex-wrap gap-3.5 pt-2">
+                                <button onclick="switchMockup('mk3', document.querySelectorAll('.mk-btn')[2])" class="bg-gradient-to-r from-[#F97316] to-[#EA580C] hover:brightness-110 text-white font-bold px-6 py-3.5 rounded-xl shadow-xl shadow-orange-600/30 flex items-center gap-2.5 text-xs uppercase tracking-wider transition">
+                                    <span>🤖</span> Consultar Asistente IA (RAG Activo)
+                                </button>
+                                <button onclick="switchMockup('mk2', document.querySelectorAll('.mk-btn')[1])" class="bg-white/10 hover:bg-white/20 backdrop-blur text-white border border-white/20 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider flex items-center gap-2 transition">
+                                    <span>📂</span> Explorar 248 Registros Auditados
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- TARJETA EJECUTIVA DE OBRA EN HERO -->
+                        <div class="lg:col-span-5 bg-slate-950/85 backdrop-blur-xl border border-slate-700/80 rounded-2xl p-6 shadow-2xl space-y-4">
+                            <div class="flex justify-between items-start border-b border-slate-800 pb-3.5">
+                                <div>
+                                    <span class="font-mono text-[11px] text-[#F97316] font-bold">EXPEDIENTE TÉCNICO: EG24-184S</span>
+                                    <h3 class="font-extrabold text-white text-base mt-0.5">Alineación Sistemas BBC-2420 Planta Galán</h3>
+                                </div>
+                                <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-mono text-[11px] px-2.5 py-1 rounded-full font-bold">
+                                    ● Completado
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 text-xs">
+                                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">Cliente / Operador</span>
+                                    <strong class="text-white font-bold">Cenit Transporte y Logística</strong>
+                                </div>
+                                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">Planta / Ubicación</span>
+                                    <strong class="text-white font-bold">Barrancabermeja (Galán)</strong>
+                                </div>
+                                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">Offset Alineación API 686</span>
+                                    <strong class="text-emerald-400 font-mono">1.4 mils (&lt; 2.0 mils máx)</strong>
+                                </div>
+                                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">Estado en Motor RAG</span>
+                                    <strong class="text-emerald-400 font-mono">✔ Indexado (Sí)</strong>
+                                </div>
+                            </div>
+                            <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 font-mono text-[11px] text-sky-300 flex items-center justify-between">
+                                <span class="truncate">📄 0.1. INFORMES TECNICOS/EG24-184S...CENIT.pdf</span>
+                                <span class="bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded ml-2 shrink-0">PDF</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BANDA DE CLIENTES B2B -->
+                <section class="bg-white border-b border-slate-200 py-4 px-8">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="font-mono text-[11px] font-bold uppercase text-slate-400">Clientes en Dataset:</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 font-extrabold text-xs text-[#0F172A]">ECOPETROL S.A.</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 font-extrabold text-xs text-[#0F172A]">CENIT TRANSPORTE</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 font-extrabold text-xs text-[#0F172A]">ARCELORMITTAL (PUERTO ANTQ)</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 font-extrabold text-xs text-[#0F172A]">SIERRACOL ENERGY</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 font-extrabold text-xs text-[#0F172A]">REFICAR</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 font-extrabold text-xs text-[#0F172A]">VEOLIA / FEMSA</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 font-extrabold text-xs text-[#0F172A]">TGI</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 font-extrabold text-xs text-[#0F172A]">SIEMENS ENERGY</span>
+                    </div>
+                </section>
+
+                <!-- 4 TARJETAS DE SERVICIOS CON IDENTIDAD INDUSTRIAL -->
+                <section class="p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-orange-400 transition group">
+                            <div class="w-11 h-11 rounded-xl bg-orange-500/10 text-[#F97316] flex items-center justify-center text-xl mb-3 font-bold">🧪</div>
+                            <span class="font-mono text-[10px] font-bold text-[#F97316] uppercase">API RP 686 Cap. 5</span>
+                            <h3 class="font-extrabold text-sm text-[#0F172A] mt-1">1. Grout Epóxico Chockfast Red</h3>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Inyección y curado térmico controlado para cimentación monolítica de skids y compresores.</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-blue-500 transition group">
+                            <div class="w-11 h-11 rounded-xl bg-blue-600/10 text-[#1E3A8A] flex items-center justify-center text-xl mb-3 font-bold">🔬</div>
+                            <span class="font-mono text-[10px] font-bold text-[#1E3A8A] uppercase">API RP 686 Cap. 6</span>
+                            <h3 class="font-extrabold text-sm text-[#0F172A] mt-1">2. Alineación Láser & Coplanaridad</h3>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Nivelación óptica/láser de bases, corrección de pata coja (&lt; 2.0 mils) y alineación de ejes.</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-emerald-500 transition group">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl mb-3 font-bold">🔩</div>
+                            <span class="font-mono text-[10px] font-bold text-emerald-600 uppercase">Procedimiento PAC-EG-073</span>
+                            <h3 class="font-extrabold text-sm text-[#0F172A] mt-1">3. Pernos de Anclaje (Anchor Bolts)</h3>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Perforación diamantada, fijación epóxica y aplicación de torque controlado en pernos.</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-slate-700 transition group">
+                            <div class="w-11 h-11 rounded-xl bg-slate-900/10 text-[#0F172A] flex items-center justify-center text-xl mb-3 font-bold">⚙️</div>
+                            <span class="font-mono text-[10px] font-bold text-slate-700 uppercase">Norma ISO 10816-3</span>
+                            <h3 class="font-extrabold text-sm text-[#0F172A] mt-1">4. Equipos Rotativos y Reciprocantes</h3>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Bombas Booster, Compresores Atlas Copco, Motores Waukesha 5351/5352 y Calderas.</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- =======================================================================
+                 MOCKUP 2: EXPLORADOR DOCUMENTAL Y PROYECTOS (248 REGISTROS)
+                 ======================================================================= -->
+            <main id="mk2" class="mockup-view p-8">
+                <!-- KPIs SUPERIORES -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-gradient-to-br from-[#0F172A] to-[#1E3A8A] text-white p-5 rounded-2xl shadow-lg">
+                        <span class="text-[11px] font-mono text-sky-300 uppercase">Dataset Consolidado</span>
+                        <div class="text-3xl font-black mt-1">248 <span class="text-xs font-normal text-slate-300">registros</span></div>
+                        <div class="text-[11px] text-orange-400 font-mono mt-1">196 Archivos + 52 SQLite</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <span class="text-[11px] font-mono text-slate-500 uppercase">Indexados en Motor RAG</span>
+                        <div class="text-3xl font-black text-[#10B981] mt-1">109 <span class="text-xs font-normal text-slate-500">chunks activos</span></div>
+                        <div class="text-[11px] text-emerald-700 font-mono mt-1">● equigrup_rag.db + SQL Tool</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <span class="text-[11px] font-mono text-slate-500 uppercase">Obras Estructuradas</span>
+                        <div class="text-3xl font-black text-[#1E3A8A] mt-1">52 <span class="text-xs font-normal text-slate-500">proyectos SQL</span></div>
+                        <div class="text-[11px] text-slate-500 font-mono mt-1">Tabla: TABLA_PROYECTOS_SQL</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <span class="text-[11px] font-mono text-slate-500 uppercase">Normativa & Procedimientos</span>
+                        <div class="text-3xl font-black text-[#F97316] mt-1">API 686</div>
+                        <div class="text-[11px] text-slate-500 font-mono mt-1">Estándares PAC-EG / PAG-EG</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- SIDEBAR FILTROS -->
+                    <aside class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4 h-fit">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <h3 class="font-extrabold text-sm text-[#0F172A]">🎛️ Filtros Facetados</h3>
+                            <button onclick="resetFiltrosMk()" class="text-[11px] font-mono text-[#F97316] font-bold hover:underline">Limpiar</button>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">carpeta_modulo</label>
+                            <select id="mkFilterModulo" onchange="filtrarTablaMockup()" class="w-full text-xs border border-slate-300 rounded-xl p-2.5 bg-slate-50 font-medium">
+                                <option value="">Todos los Módulos (5)</option>
+                                <option value="0.0. NORMATIVA">0.0. NORMATIVA Y GESTION</option>
+                                <option value="0.1. INFORMES">0.1. INFORMES TECNICOS</option>
+                                <option value="0.2. COTIZACIONES">0.2. COTIZACIONES</option>
+                                <option value="0.3. PROCEDIMIENTOS">0.3. PROCEDIMIENTOS</option>
+                                <option value="TABLA_PROYECTOS_SQL">TABLA_PROYECTOS_SQL</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">cliente_entidad</label>
+                            <select id="mkFilterCliente" onchange="filtrarTablaMockup()" class="w-full text-xs border border-slate-300 rounded-xl p-2.5 bg-slate-50 font-medium">
+                                <option value="">Todos los Clientes</option>
+                                <option value="Cenit">Cenit Transporte y Logística</option>
+                                <option value="Ecopetrol">Ecopetrol S.A.</option>
+                                <option value="ArcelorMittal">ArcelorMittal (Puerto Antioquia)</option>
+                                <option value="Veolia">Veolia / FEMSA</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">estado_operativo</label>
+                            <select id="mkFilterEstado" onchange="filtrarTablaMockup()" class="w-full text-xs border border-slate-300 rounded-xl p-2.5 bg-slate-50 font-medium">
+                                <option value="">Todos los Estados</option>
+                                <option value="Completado">Completado</option>
+                                <option value="En ejecución">En ejecución</option>
+                                <option value="Cotizado">Cotizado / Propuesta Emitida</option>
+                                <option value="Vigente">Vigente / Procedimiento Oficial</option>
+                            </select>
+                        </div>
+                    </aside>
+
+                    <!-- TABLA -->
+                    <div class="lg:col-span-9 space-y-4">
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap gap-3 items-center justify-between">
+                            <input id="mkSearchInput" oninput="filtrarTablaMockup()" type="text" placeholder="🔍 Filtrar en vivo por código (EG24-184S, PAC-EG-073), cliente (Cenit, Ecopetrol) o equipo (Waukesha)..." class="flex-1 min-w-[260px] text-xs border border-slate-300 rounded-xl px-4 py-2.5 bg-slate-50 focus:outline-none focus:border-[#F97316]">
+                            <span class="bg-[#0F172A] text-emerald-400 font-mono text-xs px-3.5 py-2 rounded-xl font-bold">● Filtro Reactivo SPA (&lt;2ms)</span>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-xs">
+                                    <thead>
+                                        <tr class="bg-[#0F172A] text-slate-200 font-mono text-[11px] uppercase">
+                                            <th class="p-3.5">Código Ref</th>
+                                            <th class="p-3.5">Módulo Documental</th>
+                                            <th class="p-3.5">Archivo / Proyecto</th>
+                                            <th class="p-3.5">Cliente & Planta</th>
+                                            <th class="p-3.5">Estado Operativo</th>
+                                            <th class="p-3.5">indexado_rag</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mkTableBody" class="divide-y divide-slate-200">
+                                        <tr class="hover:bg-orange-50/40 transition">
+                                            <td class="p-3.5 font-mono font-bold text-[#1E3A8A]">EG24-184S</td>
+                                            <td class="p-3.5 font-mono text-[11px] text-slate-600">0.1. INFORMES TECNICOS</td>
+                                            <td class="p-3.5 font-semibold text-[#0F172A]">EG24-184S INFORME ALINEACION SISTEMAS BBC-2420 PLANTA GALAN CENIT.pdf</td>
+                                            <td class="p-3.5"><strong>Cenit Transporte</strong><br><span class="text-slate-500">Planta Galán</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[11px]">Completado</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-md bg-[#10B981] text-white font-mono font-bold text-[11px]">Sí</span></td>
+                                        </tr>
+                                        <tr class="hover:bg-orange-50/40 transition">
+                                            <td class="p-3.5 font-mono font-bold text-[#1E3A8A]">EG23-133S</td>
+                                            <td class="p-3.5 font-mono text-[11px] text-slate-600">0.1. INFORMES TECNICOS</td>
+                                            <td class="p-3.5 font-semibold text-[#0F172A]">EG23-133S INFORME VISTA TECNICA SIST BOMBEO, VEOLIA FEMSA BQUILLA.docx</td>
+                                            <td class="p-3.5"><strong>Veolia / FEMSA</strong><br><span class="text-slate-500">Barranquilla</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[11px]">Completado</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-md bg-[#10B981] text-white font-mono font-bold text-[11px]">Sí</span></td>
+                                        </tr>
+                                        <tr class="hover:bg-orange-50/40 transition">
+                                            <td class="p-3.5 font-mono font-bold text-[#F97316]">EG24-189C</td>
+                                            <td class="p-3.5 font-mono text-[11px] text-slate-600">0.2. COTIZACIONES</td>
+                                            <td class="p-3.5 font-semibold text-[#0F172A]">EG24-189C APU Y PROPUESTA INYECCION GROUT CHOCKFAST RED WAUKESHA.xlsx</td>
+                                            <td class="p-3.5"><strong>Ecopetrol S.A.</strong><br><span class="text-slate-500">Barrancabermeja</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 font-bold text-[11px]">Cotizado / Propuesta Emitida</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-md bg-slate-200 text-slate-700 font-mono font-bold text-[11px]">No</span></td>
+                                        </tr>
+                                        <tr class="hover:bg-orange-50/40 transition">
+                                            <td class="p-3.5 font-mono font-bold text-[#1E3A8A]">PAC-EG-073</td>
+                                            <td class="p-3.5 font-mono text-[11px] text-slate-600">0.3. PROCEDIMIENTOS</td>
+                                            <td class="p-3.5 font-semibold text-[#0F172A]">PAC-EG-073 PROCEDIMIENTO PERFORACION Y TORQUEO PERNOS ANCLAJE.pdf</td>
+                                            <td class="p-3.5"><strong>Equigrup Oficial</strong><br><span class="text-slate-500">Estándar Calidad</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 font-bold text-[11px]">Vigente / Procedimiento Oficial</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-md bg-[#10B981] text-white font-mono font-bold text-[11px]">Sí</span></td>
+                                        </tr>
+                                        <tr class="hover:bg-orange-50/40 transition">
+                                            <td class="p-3.5 font-mono font-bold text-[#1E3A8A]">SQL-PRJ-04</td>
+                                            <td class="p-3.5 font-mono text-[11px] text-slate-600">TABLA_PROYECTOS_SQL</td>
+                                            <td class="p-3.5 font-semibold text-[#0F172A]">Instalación y Torqueo de Pernos de Anclaje - Proyecto Puerto Antioquia</td>
+                                            <td class="p-3.5"><strong>ArcelorMittal</strong><br><span class="text-slate-500">Turbo, Antioquia</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 font-bold text-[11px]">En ejecución</span></td>
+                                            <td class="p-3.5"><span class="px-2.5 py-1 rounded-md bg-[#1E3A8A] text-white font-mono font-bold text-[11px]">Sí (Vía SQL Tool)</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- =======================================================================
+                 MOCKUP 3: CONSOLA DEL CHATBOT IA (RAG + SQL TOOL)
+                 ======================================================================= -->
+            <main id="mk3" class="mockup-view p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- SIDEBAR -->
+                    <aside class="lg:col-span-3 bg-[#0F172A] text-white rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+                        <div>
+                            <button class="w-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white font-bold text-xs py-3 px-4 rounded-xl shadow mb-5 flex items-center justify-center gap-2">
+                                <span>➕</span> Nueva Consulta Técnica IA
+                            </button>
+                            <div class="text-[11px] font-mono uppercase text-slate-400 mb-3">Historial Persistente (SPA)</div>
+                            <div class="space-y-2 text-xs">
+                                <div class="p-3 rounded-xl bg-slate-800 border border-[#F97316]/60">
+                                    <div class="font-bold text-white">Curado Grout Chockfast Red</div>
+                                    <div class="font-mono text-[11px] text-slate-400 mt-0.5">Ref: API 686 Cap. 5 • Planta Galán</div>
+                                </div>
+                                <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-slate-300">
+                                    <div class="font-semibold">Alineación BBC-2420 Cenit</div>
+                                    <div class="font-mono text-[11px] text-slate-500 mt-0.5">Ref: EG24-184S • Barrancabermeja</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2 text-xs">
+                            <div class="flex items-center gap-2 text-emerald-400 font-bold">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span>RAG + SQLite Activos</span>
+                            </div>
+                            <div class="font-mono text-[11px] text-slate-400">
+                                • 109 Chunks en equigrup_rag.db<br>
+                                • 52 Obras en equigrup_proyectos.db
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- VENTANA CHAT -->
+                    <section class="lg:col-span-9 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between overflow-hidden">
+                        <div class="bg-[#0F172A] text-white px-6 py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-[#1E3A8A] border border-sky-400/40 flex items-center justify-center text-xl">🤖</div>
+                                <div>
+                                    <h2 class="font-bold text-sm">Asistente Inteligente Equi — Arquitectura Híbrida RAG + SQL Tool</h2>
+                                    <p class="text-xs text-slate-400 font-mono">Citación verificada con codigo_referencia y nombre_archivo</p>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-mono text-xs px-3 py-1 rounded-full">POST /chat</span>
+                        </div>
+
+                        <div id="mkChatBox" class="p-6 space-y-5 bg-slate-50 max-h-[440px] overflow-y-auto">
+                            <div class="flex justify-end">
+                                <div class="bg-[#1E3A8A] text-white rounded-2xl rounded-tr-sm px-5 py-3.5 max-w-2xl shadow text-xs leading-relaxed">
+                                    ¿Cuál es el espesor y tiempo de curado del Grout Chockfast Red según API 686 y qué informes tenemos en Cenit Planta Galán?
+                                </div>
+                            </div>
+                            <div class="flex justify-start gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-[#0F172A] text-[#F97316] flex items-center justify-center font-bold shrink-0">🤖</div>
+                                <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-sm p-5 max-w-3xl shadow-sm space-y-3 text-xs leading-relaxed text-slate-800">
+                                    <p><strong>1. Grout Epóxico Chockfast Red (API RP 686 Cap. 5):</strong> Espesor monolítico de <strong>25 mm a 100 mm</strong> y tiempo de curado de <strong>24 horas (entre 21°C y 28°C)</strong> antes de aplicar torque a los pernos (<code class="font-mono text-[#1E3A8A]">PAC-EG-073</code>).</p>
+                                    <p><strong>2. Obra Verificada en Planta Galán (Cenit):</strong> Contamos con el expediente <code class="font-mono font-bold text-[#1E3A8A]">EG24-184S</code> de <em>Alineación de Sistemas de Bombeo BBC-2420</em> en estado <span class="text-emerald-600 font-bold">Completado</span>.</p>
+                                    <div class="bg-slate-900 text-slate-200 rounded-xl p-3.5 space-y-2 border border-slate-800">
+                                        <div class="text-[11px] font-mono font-bold text-[#F97316]">📚 FUENTES EXTRAÍDAS POR EL MOTOR RAG (fuentes_consultadas):</div>
+                                        <div class="flex justify-between items-center bg-slate-800 px-3 py-2 rounded font-mono text-[11px]">
+                                            <span>📄 [API-686] 0.0. NORMATIVA Y GESTION / API 686.pdf</span>
+                                            <a href="/api/documentos/API%20686.pdf" target="_blank" class="bg-[#F97316] text-white px-2.5 py-0.5 rounded font-bold">Abrir PDF ↗</a>
+                                        </div>
+                                        <div class="flex justify-between items-center bg-slate-800 px-3 py-2 rounded font-mono text-[11px]">
+                                            <span>📄 [EG24-184S] 0.1. INFORMES TECNICOS / EG24-184S INFORME BBC-2420 GALAN CENIT.pdf</span>
+                                            <span class="text-emerald-400 font-bold">Indexado: Sí</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-white border-t border-slate-200 space-y-3">
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="simularPreguntaMockup('¿Qué tolerancia de pata coja (Soft Foot) exige la norma API 686?', 'Según la norma **API RP 686 Capítulo 6**, la tolerancia máxima permitida de **pata coja (Soft Foot)** en maquinaria rotativa es de **0.002 pulgadas (2.0 mils / 0.05 mm)** medida con indicador de carátula o sistema láser antes del ajuste final de lainas (shims).', 'API 686.pdf')" class="px-3 py-1.5 rounded-full bg-orange-50 hover:bg-[#F97316] hover:text-white text-[#EA580C] border border-orange-200 text-[11px] font-mono font-semibold transition">
+                                    ⚡ Probar Chip: ¿Tolerancia Pata Coja API 686?
+                                </button>
+                                <button onclick="simularPreguntaMockup('¿Qué proyectos tenemos con ArcelorMittal en Puerto Antioquia?', 'En la tabla **TABLA_PROYECTOS_SQL (`equigrup_proyectos.db`)** se registra el **Proyecto #4 (SQL-PRJ-04)**: *Instalación, Fijación y Torqueo de Pernos de Anclaje en Puerto Antioquia (Turbo)* para el cliente **ArcelorMittal**, actualmente **En ejecución** bajo el procedimiento `PAC-EG-073`.', 'PAC-EG-073 / SQL-PRJ-04')" class="px-3 py-1.5 rounded-full bg-blue-50 hover:bg-[#1E3A8A] hover:text-white text-[#1E3A8A] border border-blue-200 text-[11px] font-mono font-semibold transition">
+                                    ⚡ Probar Chip: Proyecto ArcelorMittal Puerto Antioquia
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+
+            <!-- =======================================================================
+                 MOCKUP 4: PANEL DE ADMINISTRACIÓN (AUTOGESTIÓN CMS & AUDITORÍA RAG)
+                 ======================================================================= -->
+            <main id="mk4" class="mockup-view p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- CMS AUTOGESTIONABLE -->
+                    <section class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+                        <div class="border-b border-slate-100 pb-3">
+                            <span class="font-mono text-[11px] text-[#F97316] font-bold">MÓDULO A • CMS AUTOGESTIONABLE</span>
+                            <h3 class="font-extrabold text-base text-[#0F172A]">Editor de Portada & Banner Hero</h3>
+                        </div>
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Título de la Obra Destacada *</label>
+                                <input type="text" value="Alineación Láser Turbina Solar Turbines - Ecopetrol" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 bg-slate-50 font-medium">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Cliente</label>
+                                    <input type="text" value="Ecopetrol S.A." class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 bg-slate-50">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Código Ref</label>
+                                    <input type="text" value="EG24-184S" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 bg-slate-50 font-mono">
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between bg-[#0F172A] text-white p-3.5 rounded-xl">
+                                <label class="flex items-center gap-2 font-semibold">
+                                    <input type="checkbox" checked class="w-4 h-4 accent-[#F97316]">
+                                    <span>⭐ Activar en Banner Hero Principal</span>
+                                </label>
+                                <span class="font-mono text-[11px] text-emerald-400">es_banner=True</span>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white font-bold py-3 rounded-xl shadow-lg transition">
+                                💾 Publicar Cambios en el Portal
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- AUDITORÍA DE INDEXACIÓN RAG -->
+                    <section class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                            <div>
+                                <span class="font-mono text-[11px] text-[#10B981] font-bold">MÓDULO B • AUDITORÍA DEL MOTOR RAG</span>
+                                <h3 class="font-extrabold text-base text-[#0F172A]">Control de Indexación (`equigrup_rag.db`)</h3>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 font-mono text-xs font-bold px-3 py-1 rounded-full">109 Chunks Activos</span>
+                        </div>
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-900 text-white font-mono text-[11px] uppercase">
+                                        <th class="p-3">Código</th>
+                                        <th class="p-3">Archivo / Ruta Relativa</th>
+                                        <th class="p-3">indexado_rag</th>
+                                        <th class="p-3">Acción Admin</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">
+                                    <tr>
+                                        <td class="p-3 font-mono font-bold text-[#1E3A8A]">API-686</td>
+                                        <td class="p-3 font-mono text-[11px]">0.0. NORMATIVA Y GESTION/API 686.pdf</td>
+                                        <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono font-bold">Sí (42 Chunks)</span></td>
+                                        <td class="p-3 font-mono text-emerald-600 font-bold">✔ Sincronizado</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 font-mono font-bold text-[#1E3A8A]">EG23-139S</td>
+                                        <td class="p-3 font-mono text-[11px]">0.1. INFORMES TECNICOS/EG23-139S BOMBA BOOSTER.pdf</td>
+                                        <td class="p-3"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-mono font-bold">No</span></td>
+                                        <td class="p-3">
+                                            <button onclick="this.parentElement.previousElementSibling.innerHTML='<span class=\'px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono font-bold\'>Sí (12 Chunks)</span>'; this.outerHTML='<span class=\'font-mono text-emerald-600 font-bold\'>✔ Indexado</span>';" class="bg-[#F97316] text-white font-mono font-bold px-2.5 py-1 rounded shadow">
+                                                ⚡ Indexar Ahora
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 font-mono font-bold text-[#1E3A8A]">PAC-EG-073</td>
+                                        <td class="p-3 font-mono text-[11px]">0.3. PROCEDIMIENTOS/PAC-EG-073 PERNOS ANCLAJE.pdf</td>
+                                        <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono font-bold">Sí (15 Chunks)</span></td>
+                                        <td class="p-3 font-mono text-emerald-600 font-bold">✔ Sincronizado</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function switchMockup(id, btn) {
+            document.querySelectorAll('.mockup-view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.mk-btn').forEach(b => {
+                b.className = 'mk-btn bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl border border-slate-700 transition';
+            });
+            document.getElementById(id).classList.add('active');
+            btn.className = 'mk-btn bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-orange-500/25 transition';
+        }
+
+        function filtrarTablaMockup() {
+            const q = (document.getElementById('mkSearchInput').value || '').toLowerCase();
+            const mod = (document.getElementById('mkFilterModulo').value || '').toLowerCase();
+            const cli = (document.getElementById('mkFilterCliente').value || '').toLowerCase();
+            const est = (document.getElementById('mkFilterEstado').value || '').toLowerCase();
+
+            document.querySelectorAll('#mkTableBody tr').forEach(row => {
+                const txt = row.innerText.toLowerCase();
+                const ok = (!q || txt.includes(q)) && (!mod || txt.includes(mod)) && (!cli || txt.includes(cli)) && (!est || txt.includes(est));
+                row.style.display = ok ? '' : 'none';
+            });
+        }
+
+        function resetFiltrosMk() {
+            document.getElementById('mkSearchInput').value = '';
+            document.getElementById('mkFilterModulo').value = '';
+            document.getElementById('mkFilterCliente').value = '';
+            document.getElementById('mkFilterEstado').value = '';
+            filtrarTablaMockup();
+        }
+
+        function simularPreguntaMockup(pregunta, respuesta, fuente) {
+            const box = document.getElementById('mkChatBox');
+            box.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-[#1E3A8A] text-white rounded-2xl rounded-tr-sm px-5 py-3 max-w-2xl shadow text-xs">${pregunta}</div>
+                </div>
+                <div class="flex justify-start gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-[#0F172A] text-[#F97316] flex items-center justify-center font-bold shrink-0">🤖</div>
+                    <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-sm p-4 max-w-3xl shadow-sm space-y-2 text-xs text-slate-800">
+                        <p>${respuesta}</p>
+                        <div class="bg-slate-900 text-amber-300 font-mono text-[11px] px-3 py-1.5 rounded">📚 Fuente RAG: ${fuente}</div>
+                    </div>
+                </div>
+            `;
+            box.scrollTop = box.scrollHeight;
+        }
+    </script>
+</body>
+</html>
